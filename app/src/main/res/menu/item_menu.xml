@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/m_home"
+        android:layout_width="wrap_content"
+        android:icon="@drawable/home_2"
+        android:layout_height="wrap_content"
+        android:title="홈" />
+    <item
+        android:id="@+id/m_board"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/board"
+        android:title="게시판" />
+    <item
+        android:id="@+id/m_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/chat_2"
+        android:title="채팅" />
+    <item
+        android:id="@+id/m_menu"
+        android:layout_width = "wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/menu"
+        android:title="더보기"/>
+</menu>

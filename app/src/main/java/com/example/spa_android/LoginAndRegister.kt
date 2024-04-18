@@ -1,0 +1,46 @@
+package com.example.spa_android
+
+import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import com.example.spa_android.databinding.ActivityLoginAndRegisterBinding
+
+class LoginAndRegister : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val binding = ActivityLoginAndRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        //로그인 회원가입 전환
+        binding.loginText.setOnClickListener {
+            binding.loginRecView.visibility = View.VISIBLE
+            binding.loginText.setTextColor(Color.parseColor("#FFFFFF"))
+            binding.registerText.setTextColor(Color.parseColor("#9E896A"))
+            binding.registerRecView.visibility = View.INVISIBLE
+            binding.rectangleEmail.visibility = View.GONE
+            binding.tvEmail.visibility = View.GONE
+            binding.editEmail.visibility = View.GONE
+            binding.insertRec.text = "로그인"
+        }
+        binding.registerText.setOnClickListener {
+            binding.loginRecView.visibility = View.INVISIBLE
+            binding.loginText.setTextColor(Color.parseColor("#9E896A"))
+            binding.registerText.setTextColor(Color.parseColor("#FFFFFF"))
+            binding.registerRecView.visibility = View.VISIBLE
+            binding.rectangleEmail.visibility = View.VISIBLE
+            binding.tvEmail.visibility = View.VISIBLE
+            binding.editEmail.visibility = View.VISIBLE
+            binding.insertRec.text="회원가입"
+        }
+
+
+
+        binding.insertRec.setOnClickListener {
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+}
