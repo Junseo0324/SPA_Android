@@ -11,7 +11,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@drawable/sample_user"
         app:civ_border_overlay="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,11 +38,14 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="40dp"
         android:gravity="top"
-        android:text="프로젝트 진행 상황 여기까지야."
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
         android:textColor="#7A7A7A"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 
     <TextView
         android:id="@+id/timeStampTv"

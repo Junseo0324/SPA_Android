@@ -4,7 +4,7 @@
     <item
         android:id="@+id/m_home"
         android:layout_width="wrap_content"
-        android:icon="@drawable/home_2"
+        android:icon="@drawable/home"
         android:layout_height="wrap_content"
         android:title="홈" />
     <item
@@ -17,7 +17,7 @@
         android:id="@+id/m_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/chat_2"
+        android:icon="@drawable/chat"
         android:title="채팅" />
     <item
         android:id="@+id/m_menu"
