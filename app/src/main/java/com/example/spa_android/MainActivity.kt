@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(binding.fg.id,HomeFragment()).commit()
         val nav = binding.bottomNav
 
-
+//  hello asdfasd
 //        binding.vp.apply {
 //            adapter = ViewPagerAdapater(this@MainActivity)
 //            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
