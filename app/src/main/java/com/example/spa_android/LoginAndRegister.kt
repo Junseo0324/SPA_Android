@@ -36,7 +36,7 @@ class LoginAndRegister : AppCompatActivity() {
         }
 
 
-
+        //main으로 시작
         binding.insertRec.setOnClickListener {
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)

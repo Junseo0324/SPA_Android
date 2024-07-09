@@ -2,16 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="150dp"
+    android:layout_width="180dp"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
     android:background="@drawable/background_board"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/project_member"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="70dp"
         android:layout_marginBottom="10dp"
         android:text="프로젝트 멤버 : 3"
@@ -19,30 +20,37 @@
         android:textSize="10sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintVertical_bias="0.454" />
 
     <TextView
-        android:id="@+id/projectName"
+        android:id="@+id/project_name"
         android:layout_width="114dp"
         android:layout_height="31dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
         android:text="제목"
         android:textColor="#000000"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="2dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/project_preview"
         android:layout_width="116dp"
         android:layout_height="18dp"
+        android:layout_marginStart="15dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         android:textColor="#7A7A7A"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="40dp"
-        android:maxLines="1"
-        android:ellipsize="end"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
