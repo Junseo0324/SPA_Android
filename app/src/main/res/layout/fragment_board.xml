@@ -24,6 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:paddingStart="15dp"
                 android:text="SPA"
                 android:textColor="#000000"
                 android:textSize="40sp"
@@ -33,7 +34,8 @@
                 android:id="@+id/alertBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
                 android:background="#05FFFFFF"
                 android:src="@drawable/alert"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -50,6 +52,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center|start"
+                android:paddingStart="15dp"
                 android:text="게시판"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -69,6 +72,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/board_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/board_recycler" />

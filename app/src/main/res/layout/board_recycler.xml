@@ -8,7 +8,7 @@
     android:background="@drawable/background_board">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView2"
+        android:id="@+id/board_profile"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="24dp"
@@ -40,7 +40,7 @@
         android:text="제목"
         android:textColor="#000000"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/circleImageView2"
+        app:layout_constraintStart_toEndOf="@+id/board_profile"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -52,10 +52,10 @@
         android:text="아이디"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circleImageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/board_profile" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/board_preview"
         android:layout_width="200dp"
         android:layout_height="80dp"
         android:layout_marginStart="86dp"
