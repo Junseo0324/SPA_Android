@@ -6,4 +6,73 @@
     android:layout_height="match_parent"
     tools:context=".ProjectActivity">
 
+    <TextView
+        android:id="@+id/pro_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginEnd="200dp"
+        android:text="파일"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pro_person"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="200dp"
+        android:text="인원현황"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pro_notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="212dp"
+        android:layout_marginEnd="200dp"
+        android:text="공지사항"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="파일 업로드"
+        tools:layout_editor_absoluteX="237dp"
+        tools:layout_editor_absoluteY="500dp" /> <!--파일 업로드 버튼-->
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="작성"
+        tools:layout_editor_absoluteX="266dp"
+        tools:layout_editor_absoluteY="212dp" /> <!--공지사항 작성-->
+
+    <ImageButton
+        android:id="@+id/pro_my"
+        android:layout_width="86dp"
+        android:layout_height="80dp"
+        tools:layout_editor_absoluteX="309dp"
+        tools:layout_editor_absoluteY="647dp"
+        tools:srcCompat="@tools:sample/avatars" /> <!--버튼 누르면 내정보와 내 상태변경 작게 나오게-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

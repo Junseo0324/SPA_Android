@@ -1,5 +1,6 @@
 package com.example.spa_android.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,5 +26,13 @@ class HomeFragment : Fragment() {
 
         //recyclerView를 2x2 로 만들어 주는 역할
         binding.projectRv.layoutManager = GridLayoutManager(context,2)
+        binding.projectRv.addOnItemClickListener { _, position, _ ->
+            // 프로젝트 클릭 시 ActivityProject로 이동하는 Intent 생성
+            val intent = Intent(requireContext(), ActivityProject::class.java)
+            startActivity(intent)
+        }
+
+        return binding.root
+
     }
 }

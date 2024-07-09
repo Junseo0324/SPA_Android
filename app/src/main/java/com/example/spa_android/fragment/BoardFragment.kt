@@ -1,32 +1,31 @@
 package com.example.spa_android.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import com.example.spa_android.R
+import com.example.spa_android.WriteBoradActivityActivity
+import com.example.spa_android.WriteBoradActivity
+import com.example.spa_android.databinding.FragmentOtherBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BoardFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BoardFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentOtherBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
+    }
+    private val registerActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult() // ◀ StartActivityForResult 처리를 담당
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val value = result.data?.getStringExtra("resultData")
         }
     }
 
@@ -34,27 +33,15 @@ class BoardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_board, container, false)
+        binding = FragmentOtherBinding.inflate(inflater,container,false)
+        return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BoardFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BoardFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        binding.writeBtn.setOnClickListener {
+            val intent = Intent(context, WriteBoradActivity::class.java)
+            registerActivity.launch(intent) // 변경해야됌 일단 걸어논거
+        }
     }
 }
