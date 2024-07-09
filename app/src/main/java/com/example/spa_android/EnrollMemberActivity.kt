@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.spa_android.databinding.ActivityEnrollMemberBinding
 
 
+
 class EnrollMemberActivity : AppCompatActivity() {
     private lateinit var binding : ActivityEnrollMemberBinding
     override fun onCreate(savedInstanceState: Bundle?) {
