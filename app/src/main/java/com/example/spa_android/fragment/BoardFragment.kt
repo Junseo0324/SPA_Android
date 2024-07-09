@@ -11,7 +11,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 
-import com.example.spa_android.WriteBoradActivityActivity
 import com.example.spa_android.WriteBoradActivity
 import com.example.spa_android.databinding.FragmentOtherBinding
 

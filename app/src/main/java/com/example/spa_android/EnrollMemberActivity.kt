@@ -7,8 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.example.spa_android.fragment.BoardFragment
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+
 import com.example.spa_android.databinding.ActivityEnrollMemberBinding
 
 
