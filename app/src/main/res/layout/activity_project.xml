@@ -1,78 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
     tools:context=".ProjectActivity">
 
     <TextView
-        android:id="@+id/pro_file"
+        android:id="@+id/ProjectName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="500dp"
-        android:layout_marginEnd="200dp"
-        android:text="파일"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Project Name"
+        android:textColor="#000000"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/pro_person"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="200dp"
-        android:text="인원현황"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/pro_notice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="212dp"
-        android:layout_marginEnd="200dp"
-        android:text="공지사항"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="파일 업로드"
-        tools:layout_editor_absoluteX="237dp"
-        tools:layout_editor_absoluteY="500dp" /> <!--파일 업로드 버튼-->
+            <TextView
+                android:id="@+id/textOne"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="인원 현황"
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="작성"
-        tools:layout_editor_absoluteX="266dp"
-        tools:layout_editor_absoluteY="212dp" /> <!--공지사항 작성-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/memberRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/background_board_light"
+                tools:listitem="@layout/member_recycler">
 
-    <ImageButton
-        android:id="@+id/pro_my"
-        android:layout_width="86dp"
-        android:layout_height="80dp"
-        tools:layout_editor_absoluteX="309dp"
-        tools:layout_editor_absoluteY="647dp"
-        tools:srcCompat="@tools:sample/avatars" /> <!--버튼 누르면 내정보와 내 상태변경 작게 나오게-->
+            </androidx.recyclerview.widget.RecyclerView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textTwo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="공지사항"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/informationRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/background_board_light" />
+
+            <TextView
+                android:id="@+id/textThree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="자료공유"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fileRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/background_board_light" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
