@@ -11,12 +11,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 
-import com.example.spa_android.WriteBoradActivityActivity
 import com.example.spa_android.WriteBoradActivity
-import com.example.spa_android.databinding.FragmentOtherBinding
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.BoardItemAdapter
+import com.example.spa_android.EnrollMemberActivity
 import com.example.spa_android.data.BoardItem
 import com.example.spa_android.databinding.FragmentBoardBinding
 
@@ -59,6 +58,12 @@ class BoardFragment : Fragment() {
         boardAdapter = BoardItemAdapter(boardItemList)
         binding.boardRecycler.adapter = boardAdapter
         binding.boardRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+
+        /*binding.submitBtn.setOnClickListener {
+            // enroll_member_activity로 전송하는 코드
+            val intent = Intent(context, EnrollMemberActivity::class.java)
+            registerActivity.launch(intent) // 변경해야됌 일단 걸어논거 */
 
         // 버튼 클릭 리스너 설정
         binding.writeBtn.setOnClickListener {
