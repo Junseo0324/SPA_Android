@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="50dp"
@@ -37,15 +38,15 @@
         android:layout_height="20dp"
         android:layout_marginStart="80dp"
         android:layout_marginTop="40dp"
+        android:ellipsize="end"
         android:gravity="top"
+        android:maxLines="1"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
         android:textColor="#7A7A7A"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:maxLines="1"
-        android:ellipsize="end"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/timeStampTv"
@@ -54,8 +55,32 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="10dp"
         android:text="10:48 PM"
-        android:textSize="12sp"
         android:textColor="#7A7A7A"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/NotificationIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/timeStampTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/notificationbadge" />
+
+    <TextView
+        android:id="@+id/chatNotiNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="21dp"
+        android:text="1"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
