@@ -120,14 +120,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:id="@+id/rectangle_email"
-            android:layout_width="311dp"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="60dp"
-            android:foreground="@drawable/rectangle_input"
+        <TextView
+            android:id="@+id/tv_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="28dp"
+            android:text="ID"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -137,74 +138,23 @@
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
             android:foreground="@drawable/rectangle_input"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rectangle_email" />
-
-        <View
-            android:id="@+id/rectangle_pw"
-            android:layout_width="311dp"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="50dp"
-            android:foreground="@drawable/rectangle_input"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rectangle_id" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/edit_email"
+            android:id="@+id/edit_id"
             android:layout_width="269dp"
             android:layout_height="50dp"
             android:layout_marginStart="22dp"
             android:layout_marginTop="60dp"
+            android:background="@null"
             android:ems="10"
-            android:hint="이메일 주소를 입력해주세요."
-            android:inputType="textEmailAddress"
-            app:layout_constraintStart_toStartOf="@+id/rectangle_email"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/insertRec"
-            android:layout_width="156dp"
-            android:layout_height="51dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="false"
-            android:layout_marginTop="100dp"
-            android:backgroundTint="#9E896A"
-            android:text="회원가입"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rectangle_pw" />
-
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="28dp"
-            android:text="Email Address"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:hint="아이디를 입력해주세요."
+            android:inputType="text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:text="ID"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_email" />
 
         <TextView
             android:id="@+id/tv_pw"
@@ -218,29 +168,79 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rectangle_id" />
 
-        <EditText
-            android:id="@+id/edit_id"
-            android:layout_width="269dp"
+        <View
+            android:id="@+id/rectangle_pw"
+            android:layout_width="311dp"
             android:layout_height="50dp"
-            android:layout_marginStart="22dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_marginTop="50dp"
-            android:ems="10"
-            android:hint="아이디를 입력해주세요."
-            android:inputType="text"
-            app:layout_constraintStart_toStartOf="@+id/rectangle_id"
-            app:layout_constraintTop_toBottomOf="@+id/rectangle_email" />
+            android:foreground="@drawable/rectangle_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_id" />
 
         <EditText
             android:id="@+id/edit_pw"
             android:layout_width="269dp"
             android:layout_height="50dp"
             android:layout_marginStart="22dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="50dp"
+            android:background="@null"
             android:ems="10"
             android:hint="비밀번호를 입력해주세요."
             android:inputType="textPassword"
-            app:layout_constraintStart_toStartOf="@+id/rectangle_pw"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rectangle_id" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Email Address"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_pw" />
+
+        <View
+            android:id="@+id/rectangle_email"
+            android:layout_width="311dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="60dp"
+            android:foreground="@drawable/rectangle_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_pw" />
+
+        <EditText
+            android:id="@+id/edit_email"
+            android:layout_width="269dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="60dp"
+            android:background="@null"
+            android:ems="10"
+            android:hint="이메일 주소를 입력해주세요."
+            android:inputType="textEmailAddress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_pw" />
+
+        <Button
+            android:id="@+id/insertRec"
+            android:layout_width="156dp"
+            android:layout_height="51dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="false"
+            android:layout_marginTop="100dp"
+            android:backgroundTint="#9E896A"
+            android:text="회원가입"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_email" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
