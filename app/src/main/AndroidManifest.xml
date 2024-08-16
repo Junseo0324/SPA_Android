@@ -13,6 +13,12 @@
         android:theme="@style/Theme.SPA_Android"
         tools:targetApi="31">
         <activity
+            android:name=".ProjectFileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InsertInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".MessgeActivity"
             android:exported="false" />
         <activity
