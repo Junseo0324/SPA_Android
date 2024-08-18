@@ -4,7 +4,10 @@ package com.example.spa_android
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.Button
+import com.example.spa_android.fragment.BoardFragment
 import com.example.spa_android.databinding.ActivityEnrollMemberBinding
+
 
 class EnrollMemberActivity : AppCompatActivity() {
     private lateinit var binding : ActivityEnrollMemberBinding

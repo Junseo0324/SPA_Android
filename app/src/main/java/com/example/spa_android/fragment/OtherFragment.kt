@@ -1,6 +1,7 @@
 package com.example.spa_android.fragment
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -36,6 +37,13 @@ class OtherFragment : Fragment() {
         return binding.root
     }
 
+    /*fun logout() {
+        // SharedPreferences에서 로그인 상태 삭제
+        val sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear() // 모든 데이터 삭제
+        editor.apply()*/ //아직 로그인안됨
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.myInfoConLayout.setOnClickListener {
@@ -50,6 +58,7 @@ class OtherFragment : Fragment() {
         binding.logoutBtn.setOnClickListener {
             intent = Intent(context,LoginAndRegister::class.java)
             registerActivity.launch(intent)
+
         }
 
 
