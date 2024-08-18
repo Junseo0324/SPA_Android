@@ -85,7 +85,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/nameTv" />
 
                 <ImageButton
-                    android:id="@+id/rightBtn"
+                    android:id="@+id/amendinfoBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="#00FFFFFF"
