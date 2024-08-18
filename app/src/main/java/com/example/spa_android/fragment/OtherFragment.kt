@@ -11,11 +11,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.spa_android.ApplicantActivity
 import com.example.spa_android.InfomationActivity
+import com.example.spa_android.LoginAndRegister
 import com.example.spa_android.databinding.FragmentOtherBinding
 
 class OtherFragment : Fragment() {
     private lateinit var binding: FragmentOtherBinding
-
+    private lateinit var intent: Intent
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,17 +38,18 @@ class OtherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rightBtn.setOnClickListener {
-            val intent = Intent(context,InfomationActivity::class.java)
+        binding.myInfoConLayout.setOnClickListener {
+            intent = Intent(context,InfomationActivity::class.java)
             registerActivity.launch(intent)
         }
 
-        binding.applicantBtn.setOnClickListener {
-            val intent = Intent(context,ApplicantActivity::class.java)
+        binding.projectLinear.setOnClickListener {
+            intent = Intent(context,ApplicantActivity::class.java)
             registerActivity.launch(intent) // 변경해야됌 일단 걸어논거
         }
         binding.logoutBtn.setOnClickListener {
-            //로그아웃하고 loginAndRegister로 돌아가기
+            intent = Intent(context,LoginAndRegister::class.java)
+            registerActivity.launch(intent)
         }
 
 

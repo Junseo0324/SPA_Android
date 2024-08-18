@@ -2,7 +2,6 @@
     <string name="app_name">SPA_Android</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="spinner_item">
-        <item>옵션 선택</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
