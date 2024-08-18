@@ -2,22 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/userIdTv"
+    <LinearLayout
+        android:id="@+id/chatingLinear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="user1"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/messageTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/background_board"
+        android:orientation="vertical"
         android:padding="8dp"
-        android:text="안녕"
-        android:textSize="20sp" />
+        android:gravity="start"
+        android:minWidth="180dp">
+
+        <TextView
+            android:id="@+id/userIdTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="user1"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/messageTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:padding="8dp"
+            android:text="안녕"
+            android:textSize="20sp" />
+    </LinearLayout>
 </LinearLayout>

@@ -1,26 +1,24 @@
 package com.example.spa_android
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.content.Intent
-import android.widget.Button
+import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import com.example.spa_android.fragment.BoardFragment
+import androidx.appcompat.app.AppCompatActivity
+import com.example.spa_android.databinding.ActivityWriteBoradBinding
 
 class WriteBoradActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityWriteBoradBinding
+    private lateinit var intent: Intent
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_write_borad)
+        binding = ActivityWriteBoradBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val applyButton: Button = findViewById(R.id.writeSubmit)
-
-        findViewById<Button>(R.id.writeSubmit).setOnClickListener {
-            // BoardFragment로 이동하는 Intent 생성
-            val intent = Intent(this, BoardFragment::class.java)
-            startActivity(intent)
+        binding.backBtn.setOnClickListener {
+            finish()
         }
         // 버튼 클릭 이벤트 리스너 설정
-        applyButton.setOnClickListener {
+        binding.writeSubmit.setOnClickListener {
             showApplyDialog()
         }
     }
@@ -32,6 +30,7 @@ class WriteBoradActivity : AppCompatActivity() {
             .setMessage("신청되었습니다.")
             .setPositiveButton("확인") { dialog, _ ->
                 dialog.dismiss()
+                finish()
             }
             .show()
 

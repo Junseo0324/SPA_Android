@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spa_android.databinding.ActivityInfomationBinding
@@ -16,11 +15,16 @@ class InfomationActivity : AppCompatActivity() {
         binding = ActivityInfomationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val applyButton: Button = findViewById(R.id.updateBtn)
 
-        applyButton.setOnClickListener {
+        binding.updateBtn.setOnClickListener {
             showApplyDialog()
         }
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
+        setUpSpinnerItem()
+        setUpSpinnerHandler()
     }
     // 다이얼로그를 표시
     private fun showApplyDialog() {
@@ -29,20 +33,13 @@ class InfomationActivity : AppCompatActivity() {
             .setMessage("수정되었습니다.")
             .setPositiveButton("확인") { dialog, _ ->
                 dialog.dismiss()
+                finish()
             }
             .show()
-
-        binding.backBtn.setOnClickListener {
-            intent.putExtra("resultData","true")
-            setResult(RESULT_OK,intent)
-            finish()
-
-        }
-
-        setUpSpinnerItem()
-        setUpSpinnerHandler()
-
     }
+
+
+
 
     private fun setUpSpinnerItem(){
         val spinnerItem = resources.getStringArray(R.array.spinner_item)

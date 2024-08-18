@@ -37,9 +37,10 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/applicantRv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/applicant_recycler"/>
+            tools:listitem="@layout/applicant_recycler" />
     </LinearLayout>
 
 </LinearLayout>
