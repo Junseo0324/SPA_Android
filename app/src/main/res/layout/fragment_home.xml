@@ -27,15 +27,6 @@
                 android:textSize="40sp"
                 android:textStyle="bold" />
 
-            <ImageButton
-                android:id="@+id/alertBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:background="#05FFFFFF"
-                android:src="@drawable/alert"
-                tools:ignore="SpeakableTextPresentCheck" />
         </LinearLayout>
 
         <LinearLayout
