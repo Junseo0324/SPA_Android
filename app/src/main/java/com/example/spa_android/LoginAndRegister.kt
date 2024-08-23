@@ -34,7 +34,7 @@ class LoginAndRegister : AppCompatActivity() {
             // 로그인 정보가 없을 때 처리
             println("로그인 정보가 없습니다.")
         }
-
+        //1지우셈
         val editorRemove = sharedPreferences.edit()
         editor.remove("usermail")
         editor.remove("password")
