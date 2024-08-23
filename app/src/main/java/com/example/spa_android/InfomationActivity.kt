@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spa_android.databinding.ActivityInfomationBinding
 
@@ -17,7 +16,9 @@ class InfomationActivity : AppCompatActivity() {
 
 
         binding.updateBtn.setOnClickListener {
-            showApplyDialog()
+            DialogUtils.showApplyDialog(this,"수정","수정되었습니다."){
+                finish()
+            }
         }
         binding.backBtn.setOnClickListener {
             finish()
@@ -25,17 +26,6 @@ class InfomationActivity : AppCompatActivity() {
 
         setUpSpinnerItem()
         setUpSpinnerHandler()
-    }
-    // 다이얼로그를 표시
-    private fun showApplyDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("수정")
-            .setMessage("수정되었습니다.")
-            .setPositiveButton("확인") { dialog, _ ->
-                dialog.dismiss()
-                finish()
-            }
-            .show()
     }
 
 
@@ -53,9 +43,7 @@ class InfomationActivity : AppCompatActivity() {
                // binding.tvYear.text = "select : ${binding.spinner.getItemAtPosition(position)}"
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
         }
     }
 }
