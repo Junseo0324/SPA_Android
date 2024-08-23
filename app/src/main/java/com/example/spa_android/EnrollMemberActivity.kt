@@ -4,8 +4,6 @@ package com.example.spa_android
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Button
-import com.example.spa_android.fragment.BoardFragment
 import com.example.spa_android.databinding.ActivityEnrollMemberBinding
 
 
@@ -17,12 +15,12 @@ class EnrollMemberActivity : AppCompatActivity() {
         binding = ActivityEnrollMemberBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.smBtn.setOnClickListener {
-//            intent = Intent(this,BoardFragment::class.java)
-            //이 사이에 값이 들어가는 메소드 존재해야한다.
-            finish()
+            //retrofit 코드가 존재해야함.
+            DialogUtils.showApplyDialog(this,"신청","신청되었습니다."){
+                finish()
+            }
         }
         binding.backtoBoardBtn.setOnClickListener{
-//            intent = Intent(this,BoardFragment::class.java)
             finish()
         }
 

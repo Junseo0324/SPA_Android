@@ -16,20 +16,11 @@ class InsertInfoActivity : AppCompatActivity() {
 
         binding.insertInfoBtn.setOnClickListener {
             intent = Intent(this,ProjectActivity::class.java)
-//            showApplyDialog()
-            finish()
+            DialogUtils.showApplyDialog(this,"수정","수정되었습니다.") {
+                finish()
+            }
         }
 
 
     }
-
-//    private fun showApplyDialog() {
-//        AlertDialog.Builder(this)
-//            .setTitle("수정")
-//            .setMessage("수정되었습니다.")
-//            .setPositiveButton("확인") { dialog, _ ->
-//                dialog.dismiss()
-//            }
-//            .show()
-//    }
 }
