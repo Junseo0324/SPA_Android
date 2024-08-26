@@ -1,6 +1,8 @@
 package com.example.spa_android
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +16,7 @@ import com.example.spa_android.retrofit.UserModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class LoginAndRegister : AppCompatActivity() {
     var userList = ArrayList<UserModel>()
@@ -50,6 +53,7 @@ class LoginAndRegister : AppCompatActivity() {
 
         //main으로 시작
         binding.insertRec.setOnClickListener {
+
             if(binding.insertRec.text.equals("로그인")){
                 getUserList()
             }
@@ -112,6 +116,7 @@ class LoginAndRegister : AppCompatActivity() {
         val user = userList.find { it.name == inputId && it.password == inputPw }
         Log.d(TAG,user.toString())
         if(user != null){
+
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
