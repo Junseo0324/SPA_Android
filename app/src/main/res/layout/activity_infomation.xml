@@ -33,23 +33,48 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="600dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/MainLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userInformationIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="164dp"
+                android:layout_marginTop="32dp"
+                android:src="@drawable/sample_user"
+                app:civ_border_overlay="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@android:drawable/btn_dialog" />
+
+            <View
+                android:id="@+id/rectangle_major"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="628dp"
+                android:layout_marginEnd="60dp"
+                android:foreground="@drawable/rectangle_input"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <View
                 android:id="@+id/rectangle_school"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="360dp"
+                android:layout_marginTop="468dp"
                 android:layout_marginEnd="60dp"
                 android:foreground="@drawable/rectangle_input"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,11 +83,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="168dp"
                 android:layout_marginEnd="60dp"
                 android:foreground="@drawable/rectangle_input"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,29 +96,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="168dp"
                 android:layout_marginEnd="80dp"
+                android:backgroundTint="#9E896A"
                 android:ems="10"
                 android:hint="이름을 입력해주세요."
                 android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:backgroundTint="#9E896A"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="136dp"
                 android:layout_marginEnd="80dp"
                 android:text="Name"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,11 +127,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="160dp"
+                android:layout_marginTop="268dp"
                 android:layout_marginEnd="60dp"
                 android:foreground="@drawable/rectangle_input"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -115,29 +140,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="160dp"
+                android:layout_marginTop="268dp"
                 android:layout_marginEnd="80dp"
+                android:backgroundTint="#9E896A"
                 android:ems="10"
                 android:hint="이메일 주소를 입력해주세요."
                 android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:backgroundTint="#9E896A"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_email3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="128dp"
+                android:layout_marginTop="236dp"
                 android:layout_marginEnd="80dp"
                 android:text="Email Address"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -146,13 +171,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="228dp"
+                android:layout_marginTop="336dp"
                 android:layout_marginEnd="80dp"
                 android:text="Phone Number"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -161,11 +186,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="260dp"
+                android:layout_marginTop="368dp"
                 android:layout_marginEnd="60dp"
                 android:foreground="@drawable/rectangle_input"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -174,29 +199,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="260dp"
+                android:layout_marginTop="368dp"
                 android:layout_marginEnd="80dp"
+                android:backgroundTint="#9E896A"
                 android:ems="10"
                 android:hint="전화번호를 입력해주세요."
                 android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:backgroundTint="#9E896A"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_school"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="328dp"
+                android:layout_marginTop="436dp"
                 android:layout_marginEnd="80dp"
                 android:text="School"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -205,23 +230,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="360dp"
+                android:layout_marginTop="468dp"
                 android:layout_marginEnd="80dp"
+                android:backgroundTint="#9E896A"
                 android:ems="10"
                 android:hint="학교를 입력해주세요."
                 android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:backgroundTint="#9E896A"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_year"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="45dp"
-                android:layout_marginTop="435dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="540dp"
                 android:text="Year"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -233,21 +258,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="100dp"
-                android:layout_marginTop="430dp"
+                android:layout_marginTop="536dp"
                 android:layout_marginEnd="200dp"
                 android:background="@drawable/background_spinner_option"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:id="@+id/rectangle_major"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="520dp"
-                android:layout_marginEnd="60dp"
-                android:foreground="@drawable/rectangle_input"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -258,29 +271,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="520dp"
                 android:layout_marginEnd="80dp"
+                android:backgroundTint="#9E896A"
                 android:ems="10"
                 android:hint="전공을 입력해주세요."
                 android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:backgroundTint="#9E896A"/>
+                app:layout_constraintTop_toTopOf="@+id/rectangle_major" />
 
             <TextView
                 android:id="@+id/tv_major"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="488dp"
+                android:layout_marginTop="596dp"
                 android:layout_marginEnd="80dp"
                 android:text="Major"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/informationImageTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="32dp"
+                android:text="Image"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -294,7 +318,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="false"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#9E896A"
         android:text="수정하기"
         android:textColor="#FFFFFF"
