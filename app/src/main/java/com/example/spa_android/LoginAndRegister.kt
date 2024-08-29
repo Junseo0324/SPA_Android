@@ -1,8 +1,6 @@
 package com.example.spa_android
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -58,18 +56,18 @@ class LoginAndRegister : AppCompatActivity() {
                 getUserList()
             }
             else{ //register
+                val email = binding.editEmail.text.toString()
                 val name = binding.editId.text.toString()
                 val password = binding.editPw.text.toString()
-                val email = binding.editEmail.text.toString()
 
                 if(name.isNotEmpty() && password.isNotEmpty() && email.isNotEmpty()){
-                    registerUser(name,password,email)
+                    registerUser(email,name,password)
                 }
                 else{
                     val message = when {
-                        name.isEmpty() -> "ID를 채워주세요"
+                        email.isEmpty() -> "이메일를 채워주세요"
                         password.isEmpty() -> "비밀번호를 채워주세요"
-                        else -> "이메일을 채워주세요"
+                        else -> "이름을 채워주세요"
                     }
                     if (message.isNotEmpty()) {
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -97,7 +95,7 @@ class LoginAndRegister : AppCompatActivity() {
         })
     }
 
-    private fun registerUser(name: String, password: String, email: String){
+    private fun registerUser(email: String, name: String, password: String){
         val temp = "X"
         val newUser = RegisterUserModel(name,password,email,temp,temp,temp,temp)
         RetrofitApplication.networkService.saveUser(newUser).enqueue(object : Callback<RegisterUserModel>{
@@ -112,11 +110,10 @@ class LoginAndRegister : AppCompatActivity() {
         })
     }
 
-    private fun checkLogin(inputId: String, inputPw: String){
-        val user = userList.find { it.name == inputId && it.password == inputPw }
+    private fun checkLogin(inputEmail: String, inputPw: String){
+        val user = userList.find { it.email == inputEmail && it.password == inputPw }
         Log.d(TAG,user.toString())
         if(user != null){
-
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
