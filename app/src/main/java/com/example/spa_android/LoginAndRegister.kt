@@ -59,18 +59,18 @@ class LoginAndRegister : AppCompatActivity() {
                 getUserList()
             }
             else{ //register
+                val email = binding.editEmail.text.toString()
                 val name = binding.editId.text.toString()
                 val password = binding.editPw.text.toString()
-                val email = binding.editEmail.text.toString()
 
                 if(name.isNotEmpty() && password.isNotEmpty() && email.isNotEmpty()){
-                    registerUser(name,password,email)
+                    registerUser(email,name,password)
                 }
                 else{
                     val message = when {
-                        name.isEmpty() -> "ID를 채워주세요"
+                        email.isEmpty() -> "이메일을 채워주세요"
                         password.isEmpty() -> "비밀번호를 채워주세요"
-                        else -> "이메일을 채워주세요"
+                        else -> "이름을 채워주세요"
                     }
                     if (message.isNotEmpty()) {
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -88,7 +88,7 @@ class LoginAndRegister : AppCompatActivity() {
                     Log.d(TAG,response.body().toString())
                     userList = response.body()!!
 
-                    checkLogin(binding.editId.text.toString(),binding.editPw.text.toString())
+                    checkLogin(binding.editId.text.toString(),binding.editPw.text.toString())  // id -> email로
                 }
             }
 
@@ -98,9 +98,9 @@ class LoginAndRegister : AppCompatActivity() {
         })
     }
 
-    private fun registerUser(name: String, password: String, email: String){
+    private fun registerUser(email: String, name: String, password: String){
         val temp = "X"
-        val newUser = RegisterUserModel(name,password,email,temp,temp,temp,temp)
+        val newUser = RegisterUserModel(email,name,password,temp,temp,temp,temp)
         RetrofitApplication.networkService.saveUser(newUser).enqueue(object : Callback<RegisterUserModel>{
             override fun onResponse(call: Call<RegisterUserModel>, response: Response<RegisterUserModel>) {
                 Toast.makeText(this@LoginAndRegister,"회원가입이 완료되었습니다.",Toast.LENGTH_SHORT).show()
@@ -113,8 +113,8 @@ class LoginAndRegister : AppCompatActivity() {
         })
     }
 
-    private fun checkLogin(inputId: String, inputPw: String){
-        val user = userList.find { it.name == inputId && it.password == inputPw }
+    private fun checkLogin(inputEmail: String, inputPw: String){
+        val user = userList.find { it.email == inputEmail && it.password == inputPw }  // name -> email
         Log.d(TAG,user.toString())
         if(user != null){
 
@@ -122,7 +122,7 @@ class LoginAndRegister : AppCompatActivity() {
             startActivity(intent)
             finish()
         }else{
-            Toast.makeText(this,"로그인 실패! 아이디와 비번 확인",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"로그인 실패! 이메일과 비번 확인",Toast.LENGTH_SHORT).show()
         }
     }
 
