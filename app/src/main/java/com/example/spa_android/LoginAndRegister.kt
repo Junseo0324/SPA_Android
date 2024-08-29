@@ -3,7 +3,6 @@ package com.example.spa_android
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -69,6 +68,7 @@ class LoginAndRegister : AppCompatActivity() {
                 else{
                     val message = when {
                         email.isEmpty() -> "이메일을 채워주세요"
+
                         password.isEmpty() -> "비밀번호를 채워주세요"
                         else -> "이름을 채워주세요"
                     }
@@ -114,10 +114,10 @@ class LoginAndRegister : AppCompatActivity() {
     }
 
     private fun checkLogin(inputEmail: String, inputPw: String){
+
         val user = userList.find { it.email == inputEmail && it.password == inputPw }  // name -> email
         Log.d(TAG,user.toString())
         if(user != null){
-
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
