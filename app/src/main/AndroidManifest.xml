@@ -36,7 +36,7 @@
             android:name=".ApplicantActivity"
             android:exported="false" />
         <activity
-            android:name=".InfomationActivity"
+            android:name=".InformationActivity"
             android:exported="false" />
         <activity
             android:name=".ProjectActivity"
