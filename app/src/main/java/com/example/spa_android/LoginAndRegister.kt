@@ -1,5 +1,7 @@
 package com.example.spa_android
 
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
