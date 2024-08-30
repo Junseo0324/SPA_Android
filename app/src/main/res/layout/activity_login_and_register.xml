@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="28dp"
-            android:text="ID"
+            android:text="이름"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -151,10 +151,46 @@
             android:layout_marginTop="60dp"
             android:background="@null"
             android:ems="10"
-            android:hint="아이디를 입력해주세요."
+            android:hint="이름을 입력해주세요."
             android:inputType="text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Email"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_id" />
+
+        <View
+            android:id="@+id/rectangle_email"
+            android:layout_width="311dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="50dp"
+            android:foreground="@drawable/rectangle_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_id" />
+
+        <EditText
+            android:id="@+id/edit_email"
+            android:layout_width="269dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="50dp"
+            android:background="@null"
+            android:ems="10"
+            android:hint="이메일 주소를 입력해주세요."
+            android:inputType="textPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_id" />
 
         <TextView
             android:id="@+id/tv_pw"
@@ -166,7 +202,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rectangle_id" />
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_email" />
 
         <View
             android:id="@+id/rectangle_pw"
@@ -174,59 +210,23 @@
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
             android:foreground="@drawable/rectangle_input"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rectangle_id" />
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_email" />
 
         <EditText
             android:id="@+id/edit_pw"
             android:layout_width="269dp"
             android:layout_height="50dp"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="60dp"
             android:background="@null"
             android:ems="10"
             android:hint="비밀번호를 입력해주세요."
-            android:inputType="textPassword"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rectangle_id" />
-
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Email Address"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rectangle_pw" />
-
-        <View
-            android:id="@+id/rectangle_email"
-            android:layout_width="311dp"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="60dp"
-            android:foreground="@drawable/rectangle_input"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rectangle_pw" />
-
-        <EditText
-            android:id="@+id/edit_email"
-            android:layout_width="269dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="60dp"
-            android:background="@null"
-            android:ems="10"
-            android:hint="이메일 주소를 입력해주세요."
             android:inputType="textEmailAddress"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rectangle_pw" />
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_email" />
 
         <Button
             android:id="@+id/insertRec"
@@ -240,7 +240,7 @@
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rectangle_email" />
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_pw" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
