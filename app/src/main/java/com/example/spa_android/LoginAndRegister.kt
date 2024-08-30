@@ -1,8 +1,8 @@
 package com.example.spa_android
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -22,11 +22,25 @@ class LoginAndRegister : AppCompatActivity() {
     var userList = ArrayList<UserModel>()
     val userCall: Call<ArrayList<UserModel>> = RetrofitApplication.networkService.doGetUserList()
     private lateinit var binding: ActivityLoginAndRegisterBinding
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginAndRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //sharedPreferences 초기화
+        sharedPreferences = getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
+        val userInformation = sharedPreferences.getString("email",null)
+
+
+        //userInformation으로 자동 로그인 여부 확인
+        if(userInformation != null){
+            loginAuto(userInformation)
+        }else{
+            val intent = Intent(this,LoginAndRegister::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         //로그인 회원가입 전환
         binding.loginText.setOnClickListener {
@@ -124,6 +138,17 @@ class LoginAndRegister : AppCompatActivity() {
         }
     }
 
+    private fun loginAuto(email: String){
+        Toast.makeText(this,"자동 로그인",Toast.LENGTH_SHORT).show()
+        val intent = Intent(this,MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+//    private fun saveInformation(email: String){
+//        if(binding.checkbox.isChecked){
+//            sharedPreferences.edit().putString("email",email).apply()
+//        }
+//    }
     companion object{
         const val TAG = "LoginAndRegister"
     }
