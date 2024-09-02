@@ -10,9 +10,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spa_android.databinding.ActivityLoginAndRegisterBinding
-import com.example.spa_android.retrofit.RegisterUserModel
 import com.example.spa_android.retrofit.RetrofitApplication
 import com.example.spa_android.retrofit.UserModel
+import com.example.spa_android.retrofit.UserRequestModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,18 +29,18 @@ class LoginAndRegister : AppCompatActivity() {
         setContentView(binding.root)
 
         //sharedPreferences 초기화
-        sharedPreferences = getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("MyInformation", Context.MODE_PRIVATE)
         val userInformation = sharedPreferences.getString("email",null)
 
 
         //userInformation으로 자동 로그인 여부 확인
-        if(userInformation != null){
-            loginAuto(userInformation)
-        }else{
-            val intent = Intent(this,LoginAndRegister::class.java)
-            startActivity(intent)
-            finish()
-        }
+//        if(userInformation != null){
+//            loginAuto(userInformation)
+//        }else{
+//            val intent = Intent(this,LoginAndRegister::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
 
         //로그인 회원가입 전환
         binding.loginText.setOnClickListener {
@@ -112,14 +112,14 @@ class LoginAndRegister : AppCompatActivity() {
     }
 
     private fun registerUser(email: String, name: String, password: String){
-        val temp = "X"
-        val newUser = RegisterUserModel(name,password,email,temp,temp,temp,temp)
-        RetrofitApplication.networkService.saveUser(newUser).enqueue(object : Callback<RegisterUserModel>{
-            override fun onResponse(call: Call<RegisterUserModel>, response: Response<RegisterUserModel>) {
+        val temp = null
+        val newUser = UserRequestModel(temp,name,password,email,temp,temp,temp,temp)
+        RetrofitApplication.networkService.saveUser(newUser).enqueue(object : Callback<UserRequestModel>{
+            override fun onResponse(call: Call<UserRequestModel>, response: Response<UserRequestModel>) {
                 Toast.makeText(this@LoginAndRegister,"회원가입이 완료되었습니다.",Toast.LENGTH_SHORT).show()
             }
 
-            override fun onFailure(call: Call<RegisterUserModel>, t: Throwable) {
+            override fun onFailure(call: Call<UserRequestModel>, t: Throwable) {
 
                 Log.d(TAG,"회원가입 실패 ${t.message}")
             }
@@ -130,6 +130,9 @@ class LoginAndRegister : AppCompatActivity() {
         val user = userList.find { it.email == inputEmail && it.password == inputPw }
         Log.d(TAG,user.toString())
         if(user != null){
+            val editor = sharedPreferences.edit()
+            editor.putString("email",inputEmail)
+            editor.apply()
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
