@@ -1,8 +1,10 @@
 package com.example.spa_android.fragment
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +22,21 @@ class OtherFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding.logoutBtn.setOnClickListener{
+            logout()
+            intent = Intent(context,LoginAndRegister::class.java)
+
+        }
     }
+    private fun logout() {
+        val sharedPreferences = requireActivity().getSharedPreferences("MyInformation", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            clear() // 모든 데이터를 삭제
+            apply() // 변경사항을 저장
+        }
+    }
+
+
     private val registerActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult() // ◀ StartActivityForResult 처리를 담당
     ) { result ->
@@ -36,12 +52,7 @@ class OtherFragment : Fragment() {
         return binding.root
     }
 
-    /*fun logout() {
-        // SharedPreferences에서 로그인 상태 삭제
-        val sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.clear() // 모든 데이터 삭제
-        editor.apply()*/ //아직 로그인안됨
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
