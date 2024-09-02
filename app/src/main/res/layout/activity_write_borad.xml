@@ -112,12 +112,18 @@
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/fileupBtn"
+                android:layout_width="181dp"
+                android:layout_height="wrap_content"
+                android:text="파일 첨부" />
+
             <EditText
                 android:id="@+id/contentEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:background="@drawable/background_board"
                 android:ems="10"
                 android:hint="    내용 입력"
