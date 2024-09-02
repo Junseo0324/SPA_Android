@@ -8,3 +8,11 @@ data class BoardModel(
     var filePath: String, //업로드 파일
     var timestamp: String //업로드 시간
 )
+
+data class BoardRequestModel(
+    var title: String,
+    var content: String,
+    var fileName: String,
+    var filePath: String,
+    var timestamp: String
+)
