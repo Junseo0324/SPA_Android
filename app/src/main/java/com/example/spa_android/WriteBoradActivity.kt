@@ -1,13 +1,11 @@
 package com.example.spa_android
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spa_android.databinding.ActivityWriteBoradBinding
 
 class WriteBoradActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWriteBoradBinding
-    private lateinit var intent: Intent
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWriteBoradBinding.inflate(layoutInflater)
@@ -23,6 +21,7 @@ class WriteBoradActivity : AppCompatActivity() {
             }
         }
     }
+
 
 
 }
