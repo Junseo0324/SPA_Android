@@ -48,9 +48,10 @@ class LoginAndRegister : AppCompatActivity() {
             binding.loginText.setTextColor(Color.parseColor("#FFFFFF"))
             binding.registerText.setTextColor(Color.parseColor("#9E896A"))
             binding.registerRecView.visibility = View.INVISIBLE
-            binding.rectangleEmail.visibility = View.GONE
-            binding.tvEmail.visibility = View.GONE
-            binding.editEmail.visibility = View.GONE
+            binding.rectangleId.visibility = View.GONE
+            binding.tvId.visibility = View.GONE
+            binding.editId.visibility = View.GONE
+            binding.checkBox.visibility = View.VISIBLE
             binding.insertRec.text = "로그인"
         }
         binding.registerText.setOnClickListener {
@@ -58,9 +59,10 @@ class LoginAndRegister : AppCompatActivity() {
             binding.loginText.setTextColor(Color.parseColor("#9E896A"))
             binding.registerText.setTextColor(Color.parseColor("#FFFFFF"))
             binding.registerRecView.visibility = View.VISIBLE
-            binding.rectangleEmail.visibility = View.VISIBLE
-            binding.tvEmail.visibility = View.VISIBLE
-            binding.editEmail.visibility = View.VISIBLE
+            binding.rectangleId.visibility = View.VISIBLE
+            binding.tvId.visibility = View.VISIBLE
+            binding.editId.visibility = View.VISIBLE
+            binding.checkBox.visibility = View.INVISIBLE
             binding.insertRec.text="회원가입"
         }
 
