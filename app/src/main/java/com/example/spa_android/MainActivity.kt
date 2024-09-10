@@ -2,6 +2,7 @@ package com.example.spa_android
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.spa_android.databinding.ActivityMainBinding
 import com.example.spa_android.fragment.BoardFragment
 import com.example.spa_android.fragment.ChatListFragment
@@ -9,43 +10,41 @@ import com.example.spa_android.fragment.HomeFragment
 import com.example.spa_android.fragment.OtherFragment
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        supportFragmentManager.beginTransaction().add(binding.fg.id,HomeFragment()).commit()
-        val nav = binding.bottomNav
-
-        nav.setOnItemSelectedListener {item ->
-            when(item.itemId){
+        // 초기 Fragment 설정
+        replaceFragment(HomeFragment())
+        binding.bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
                 R.id.m_board -> {
-                    supportFragmentManager.beginTransaction().replace(binding.fg.id,
-                        BoardFragment()
-                    ).commit()
+                    replaceFragment(BoardFragment())
                     true
-
                 }
                 R.id.m_home -> {
-                    supportFragmentManager.beginTransaction().replace(binding.fg.id, HomeFragment()).commit()
+                    replaceFragment(HomeFragment())
                     true
                 }
                 R.id.m_chat -> {
-                    supportFragmentManager.beginTransaction().replace(binding.fg.id,
-                        ChatListFragment()
-                    ).commit()
+                    replaceFragment(ChatListFragment())
                     true
                 }
                 R.id.m_menu -> {
-                    supportFragmentManager.beginTransaction().replace(binding.fg.id,
-                        OtherFragment()).commit()
+                    replaceFragment(OtherFragment())
                     true
                 }
-
                 else -> false
             }
         }
     }
+    private fun replaceFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction()
+            .replace(binding.fg.id, fragment)
+            .commit()
+    }
+
 
 }
