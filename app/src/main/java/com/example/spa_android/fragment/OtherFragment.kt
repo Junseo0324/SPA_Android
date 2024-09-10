@@ -3,33 +3,33 @@ package com.example.spa_android.fragment
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.spa_android.ApplicantActivity
 import com.example.spa_android.InformationActivity
 import com.example.spa_android.LoginAndRegister
+import com.example.spa_android.R
 import com.example.spa_android.databinding.FragmentOtherBinding
+import com.example.spa_android.retrofit.RetrofitApplication
 
 class OtherFragment : Fragment() {
     private lateinit var binding: FragmentOtherBinding
     private lateinit var intent: Intent
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var name: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding.logoutBtn.setOnClickListener{
-            logout()
-            intent = Intent(context,LoginAndRegister::class.java)
-
-        }
+        sharedPreferences = requireActivity().getSharedPreferences("MyInformation", Context.MODE_PRIVATE)
     }
+
     private fun logout() {
-        val sharedPreferences = requireActivity().getSharedPreferences("MyInformation", Context.MODE_PRIVATE)
         with(sharedPreferences.edit()) {
             clear() // 모든 데이터를 삭제
             apply() // 변경사항을 저장
@@ -56,6 +56,12 @@ class OtherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        updateUserInformation()
+        binding.logoutBtn.setOnClickListener{
+            logout()
+            intent = Intent(context,LoginAndRegister::class.java)
+
+        }
         binding.myInfoConLayout.setOnClickListener {
             intent = Intent(context,InformationActivity::class.java)
             registerActivity.launch(intent)
@@ -66,11 +72,23 @@ class OtherFragment : Fragment() {
             registerActivity.launch(intent) // 변경해야됌 일단 걸어논거
         }
         binding.logoutBtn.setOnClickListener {
+//            logout()
             intent = Intent(context,LoginAndRegister::class.java)
             registerActivity.launch(intent)
 
         }
 
 
+
     }
+
+    private fun updateUserInformation(){
+        val filepath = sharedPreferences.getString("userprofile",null)
+        binding.nameTv.text = sharedPreferences.getString("name",null)
+        Glide.with(binding.userImageView.context)
+            .load(RetrofitApplication.BASE_URL+ filepath)
+            .error(R.drawable.sample_user)
+            .into(binding.userImageView)
+    }
+
 }

@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spa_android.EnrollMemberActivity
-import com.example.spa_android.data.BoardItem
 import com.example.spa_android.databinding.BoardRecyclerBinding
+import com.example.spa_android.retrofit.BoardModel
 
-class BoardItemAdapter(private val itemList :ArrayList<BoardItem>):
+class BoardItemAdapter(private val itemList :ArrayList<BoardModel>):
 RecyclerView.Adapter<BoardItemAdapter.BoardItemViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoardItemAdapter.BoardItemViewHolder {
         val binding = BoardRecyclerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -16,10 +16,10 @@ RecyclerView.Adapter<BoardItemAdapter.BoardItemViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: BoardItemAdapter.BoardItemViewHolder, position: Int) {
-        holder.nameText.text = itemList[position].name
+        holder.nameText.text = itemList[position].owner
         holder.titleText.text = itemList[position].title
-        holder.timeText.text = itemList[position].time
-        holder.previewText.text = itemList[position].preview
+        holder.timeText.text = itemList[position].timestamp
+        holder.previewText.text = itemList[position].content
         holder.submitBtn.setOnClickListener {
             val intent = Intent(holder.itemView.context,EnrollMemberActivity::class.java)
             holder.itemView.context.startActivity(intent)

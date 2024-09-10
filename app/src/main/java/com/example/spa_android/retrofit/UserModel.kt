@@ -2,7 +2,7 @@ package com.example.spa_android.retrofit
 
 data class UserModel(
     var id: Long,
-    var filepath: String, //파일 경로
+    var filePath: String, //파일 경로
     var name: String, //이름
     var password: String, //비밀번호
     var email: String, //이메일
@@ -12,7 +12,7 @@ data class UserModel(
     var major: String//전공
 )
 data class UserRequestModel(
-    val filepath: String?,
+    val filePath: String?,
     val name: String,
     val password: String,
     val email: String,

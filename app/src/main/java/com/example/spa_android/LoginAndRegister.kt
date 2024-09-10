@@ -20,7 +20,7 @@ import retrofit2.Response
 
 class LoginAndRegister : AppCompatActivity() {
     var userList = ArrayList<UserModel>()
-    val userCall: Call<ArrayList<UserModel>> = RetrofitApplication.networkService.doGetUserList()
+    private val userCall: Call<ArrayList<UserModel>> = RetrofitApplication.networkService.doGetUserList()
     private lateinit var binding: ActivityLoginAndRegisterBinding
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,13 +33,9 @@ class LoginAndRegister : AppCompatActivity() {
         val userInformation = sharedPreferences.getString("email",null)
 
 
-        //userInformation으로 자동 로그인 여부 확인
+////        userInformation으로 자동 로그인 여부 확인
 //        if(userInformation != null){
 //            loginAuto(userInformation)
-//        }else{
-//            val intent = Intent(this,LoginAndRegister::class.java)
-//            startActivity(intent)
-//            finish()
 //        }
 
         //로그인 회원가입 전환
@@ -104,7 +100,8 @@ class LoginAndRegister : AppCompatActivity() {
                     Log.d(TAG,response.body().toString())
                     userList = response.body()!!
 
-                    checkLogin(binding.editId.text.toString(),binding.editPw.text.toString())  // id -> email로
+
+                    checkLogin(binding.editEmail.text.toString(),binding.editPw.text.toString())  // id -> email로
                 }
             }
 
@@ -136,8 +133,12 @@ class LoginAndRegister : AppCompatActivity() {
         val user = userList.find { it.email == inputEmail && it.password == inputPw }  // name -> email
         Log.d(TAG,user.toString())
         if(user != null){
+            var myList : List<UserModel> = userList.filter { it.email == inputEmail }
             val editor = sharedPreferences.edit()
             editor.putString("email",inputEmail)
+            editor.putString("userprofile",myList[0].filePath)
+            editor.putString("name",myList[0].name)
+            editor.putString("pw",myList[0].password)
             editor.apply()
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
@@ -148,16 +149,14 @@ class LoginAndRegister : AppCompatActivity() {
     }
 
     private fun loginAuto(email: String){
-        Toast.makeText(this,"자동 로그인",Toast.LENGTH_SHORT).show()
-        val intent = Intent(this,MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        if(binding.checkBox.isChecked) {
+            sharedPreferences.edit().putString("email", email).apply()
+            Toast.makeText(this, "자동 로그인", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
-//    private fun saveInformation(email: String){
-//        if(binding.checkbox.isChecked){
-//            sharedPreferences.edit().putString("email",email).apply()
-//        }
-//    }
     companion object{
         const val TAG = "LoginAndRegister"
     }
