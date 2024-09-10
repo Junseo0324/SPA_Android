@@ -1,5 +1,6 @@
 package com.example.spa_android.service
 
+import com.example.spa_android.retrofit.BoardModel
 import com.example.spa_android.retrofit.UserModel
 import com.example.spa_android.retrofit.UserRequestModel
 import okhttp3.MultipartBody
@@ -22,9 +23,11 @@ interface NetworkService {
 
     @Multipart
     @PUT("/fireEntity/update/{email}")
-    fun updateUser(@Path("email") email: String, @Part("fireDTO") user: RequestBody,@Part filepath: MultipartBody.Part)
+    fun updateUser(@Path("email") email: String, @Part("fireDTO") user: RequestBody,@Part filePath: MultipartBody.Part)
     : Call<Map<String,String>>
 
+    @GET("/api/board/list")
+    fun getBoardList(): Call<ArrayList<BoardModel>>
 
 
 }

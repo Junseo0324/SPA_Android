@@ -2,6 +2,7 @@ package com.example.spa_android
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,7 +17,7 @@ import com.example.spa_android.retrofit.UserRequestModel
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,12 +30,13 @@ class InformationActivity : AppCompatActivity() {
     private var selectedImageUri: Uri? = null
     private var userList = ArrayList<UserModel>()
     private val userCall: Call<ArrayList<UserModel>> = RetrofitApplication.networkService.doGetUserList()
-    private val imageUrl = RetrofitApplication.BASE_URL+"/src/main/resources/static/files/"
+    private val imageUrl = RetrofitApplication.BASE_URL
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInfomationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val sharedPreferences = getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
         val email = sharedPreferences.getString("email",null)
         if (email != null) {
             setUserInformation(email)
@@ -58,12 +60,14 @@ class InformationActivity : AppCompatActivity() {
 
 
     private fun selectImageFromGallery(){
+        Log.d("InformationActivity","selectedImageFromGallery 시작")
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         resultLauncher.launch(intent)
     }
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
         if(result.resultCode == RESULT_OK){
             selectedImageUri = result.data?.data //선택된 이미지의 URI를 가져옴
+            Log.d("InformationActivity","selectedImageUri: $selectedImageUri")
             binding.userInformationIcon.setImageURI(selectedImageUri)
         }
     }
@@ -78,7 +82,7 @@ class InformationActivity : AppCompatActivity() {
         val password = "1111" // 비밀번호를 입력받는 경우 여기에 추가
 
         changeUser = UserRequestModel(
-            filepath = selectedImageUri?.let { getPathFromUri(it) },
+            filePath = selectedImageUri?.let { getPathFromUri(it) },
             name = name,
             password = password,
             email = email,
@@ -87,18 +91,32 @@ class InformationActivity : AppCompatActivity() {
             year = year,
             major = major
         )
+        Log.d("InformationActivity","changeUser: $changeUser")
         if (selectedImageUri != null) {
+            // URI에서 파일 경로 가져오기
+            val filePath = getPathFromUri(selectedImageUri!!)
+            Log.d("InformationActivity", "selectedImageUri: $selectedImageUri")
+
+            val file = File(filePath)
+
+            // 파일 확장자와 MIME 타입 결정
+            val fileName = "${email}.${if (file.extension == "png") "png" else "jpeg"}"
+            Log.d("InformationActivity", "File extension: ${file.extension}")
+
+            val mimeType = if (file.extension == "png") "image/png" else "image/jpeg"
+
+            // MultipartBody.Part 생성
             val filePart = MultipartBody.Part.createFormData(
-                "filepath",
-                "${email}.png", // 파일 이름 ( 이메일.png )
-                RequestBody.create("image/png".toMediaTypeOrNull(), File(getPathFromUri(selectedImageUri!!)))
+                "filePath", // 서버에서 기대하는 파라미터 이름
+                fileName, // 파일 이름 (이메일.png 또는 이메일.jpeg)
+                file.asRequestBody(mimeType.toMediaTypeOrNull()) // MIME 타입에 맞게 RequestBody 생성
             )
 
+            // 사용자 정보 업데이트 호출
             updateUser(email, changeUser, filePart)
         } else {
             Log.d("InformationActivity", "이미지가 선택되지 않았습니다.")
         }
-
     }
 
     private fun updateUser(email: String,user: UserRequestModel,file:MultipartBody.Part){
@@ -123,8 +141,11 @@ class InformationActivity : AppCompatActivity() {
     }
 
     private fun getPathFromUri(uri: Uri): String? {
+        Log.d("InformationActivity","getPathFromUri 시작")
         val inputStream = contentResolver.openInputStream(uri)
         val file = File(cacheDir, "temp_image.png")
+        Log.d("InformationActivity",uri.toString())
+        Log.d("InformationActivity",file.absolutePath)
         inputStream?.use { input ->
             file.outputStream().use { output ->
                 input.copyTo(output)
@@ -145,9 +166,10 @@ class InformationActivity : AppCompatActivity() {
                     binding.editMajor.setText(userList[0].major)
                     SpinnerHandler.setSelectedItem(binding,userList[0].year)
                     Glide.with(binding.userInformationIcon.context)
-                        .load(imageUrl)
+                        .load(imageUrl+userList[0].filePath)
                         .error(R.drawable.sample_user)
                         .into(binding.userInformationIcon)
+                    Log.d("ImageUrl",imageUrl+userList[0].filePath)
                 }
             }
 
