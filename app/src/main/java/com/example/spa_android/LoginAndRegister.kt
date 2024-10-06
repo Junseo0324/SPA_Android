@@ -33,12 +33,12 @@ class LoginAndRegister : AppCompatActivity() {
         val userInformation = sharedPreferences.getString("email",null)
 
 
-////        userInformation으로 자동 로그인 여부 확인
-//        if(userInformation != null){
-//            loginAuto(userInformation)
-//        }
+        //자동 로그인 확인
+        if(userInformation!=null){
+            loginAuto(userInformation)
+        }
 
-        //로그인 회원가입 전환
+        //로그인 회원가입 전환 -> 시작 시 로그인 먼저 뜨도록 코드 변경
         binding.loginText.setOnClickListener {
             binding.loginRecView.visibility = View.VISIBLE
             binding.loginText.setTextColor(Color.parseColor("#FFFFFF"))
@@ -135,10 +135,12 @@ class LoginAndRegister : AppCompatActivity() {
         if(user != null){
             var myList : List<UserModel> = userList.filter { it.email == inputEmail }
             val editor = sharedPreferences.edit()
+            editor.putLong("id",myList[0].id)
             editor.putString("email",inputEmail)
             editor.putString("userprofile",myList[0].filePath)
             editor.putString("name",myList[0].name)
             editor.putString("pw",myList[0].password)
+            editor.putString("filePath",myList[0].filePath)
             editor.apply()
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)

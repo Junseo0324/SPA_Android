@@ -12,7 +12,5 @@ data class BoardModel(
 data class BoardRequestModel(
     var title: String,
     var content: String,
-    var filePath: String,
-    var timestamp: String,
     var owner: String
 )

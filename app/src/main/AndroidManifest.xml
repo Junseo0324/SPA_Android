@@ -30,7 +30,7 @@
             android:name=".EnrollMemberActivity"
             android:exported="false" />
         <activity
-            android:name=".WriteBoradActivity"
+            android:name=".WriteBoardActivity"
             android:exported="false" />
         <activity
             android:name=".ApplicantActivity"
