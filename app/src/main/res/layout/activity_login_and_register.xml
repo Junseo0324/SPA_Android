@@ -63,6 +63,7 @@
         android:layout_marginStart="210dp"
         android:layout_marginTop="150dp"
         android:background="@drawable/rectangle"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,23 +76,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="150dp"
         android:background="@drawable/rectangle"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/registerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="157dp"
-        android:gravity="top"
-        android:text="회원가입"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/registerRecView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -104,10 +89,24 @@
         android:layout_marginTop="157dp"
         android:gravity="top"
         android:text="로그인"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/loginRecView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/registerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="157dp"
+        android:gravity="top"
+        android:text="회원가입"
         android:textColor="#9E896A"
         android:textSize="16sp"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="@+id/loginRecView"
+        app:layout_constraintStart_toStartOf="@+id/registerRecView"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -130,6 +129,7 @@
             android:text="이름"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -141,6 +141,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="60dp"
             android:foreground="@drawable/rectangle_input"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,6 +155,7 @@
             android:ems="10"
             android:hint="이름을 입력해주세요."
             android:inputType="text"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -238,7 +240,7 @@
             android:layout_marginStart="155dp"
             android:layout_marginTop="100dp"
             android:backgroundTint="#9E896A"
-            android:text="회원가입"
+            android:text="로그인"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -253,7 +255,6 @@
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="5dp"
             android:text="자동 로그인"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/insertRec"
             app:layout_constraintStart_toStartOf="parent" />

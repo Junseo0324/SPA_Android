@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".WriteBoradActivity">
+    tools:context=".WriteBoardActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -79,9 +80,9 @@
                 android:id="@+id/titleTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:text="제목"
-                android:layout_marginStart="10dp"
 
                 android:textColor="#000000"
                 android:textSize="20sp" />
@@ -106,22 +107,22 @@
                 android:id="@+id/contentTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="내용"
                 android:layout_marginStart="10dp"
+                android:text="내용"
 
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
             <Button
                 android:id="@+id/fileupBtn"
-                android:layout_width="181dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="파일 첨부" />
 
             <EditText
                 android:id="@+id/contentEdit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="400dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/background_board"
