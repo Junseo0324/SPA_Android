@@ -32,6 +32,9 @@ class WriteBoradActivity : AppCompatActivity() {
                 finish()
             }
         }
+        binding.deletefileBtn.setOnClickListener {
+            
+        }
         fileupBtn = findViewById(R.id.fileupBtn)
         fileupBtn.setOnClickListener{
             openFileChooser()

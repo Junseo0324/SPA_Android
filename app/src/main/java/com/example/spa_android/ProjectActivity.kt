@@ -67,13 +67,26 @@ class ProjectActivity : AppCompatActivity() {
         //Intent//
         binding.infoBtn.setOnClickListener {
             val intent = Intent(this,InsertInfoActivity::class.java)
+            intent.putExtra("isEdit",false) //작성버튼
             startActivity(intent)
+        }
+        binding.infoBtn.setOnLongClickListener {
+            val intent = Intent(this,InsertInfoActivity::class.java)
+            intent.putExtra("isEdit", true) //수정버튼
+            startActivity(intent)
+            true
         }
         binding.fileButton.setOnClickListener {
             val intent = Intent(this,ProjectFileActivity::class.java)
             startActivity(intent)
         }
-
+        binding.fileButton.setOnLongClickListener {
+            val intent = Intent(this,ProjectFileActivity::class.java)
+            intent.putExtra("isEdit", true) //수정버튼
+            startActivity(intent)
+            true
+        }
 
     }
+
 }

@@ -94,20 +94,6 @@ class OtherFragment : Fragment() {
             .setNegativeButton("아니오", null)
             .show()
     }
-    /*private fun deleteAccount() {
-        // 데이터베이스에서 사용자 정보 삭제
-        // val userId = getCurrentUserId() // 현재 로그인한 사용자 ID 가져오기
-
-        // val database = DatabaseHelper(requireContext())
-         val result = database.deleteUser(userId)
-        if (result) {
-            Toast.makeText(requireContext(), "회원 탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
-            // 추가적인 작업: 예를 들어, 로그인 화면으로 이동
-
-        } else {
-            Toast.makeText(requireContext(), "회원 탈퇴에 실패했습니다.", Toast.LENGTH_SHORT).show()
-        }
-    }*/
 
     private fun updateUserInformation(){
         val filepath = sharedPreferences.getString("userprofile",null)
