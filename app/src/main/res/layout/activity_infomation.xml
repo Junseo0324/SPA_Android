@@ -66,11 +66,24 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
-                android:id="@+id/rectangle_school"
+                android:id="@+id/rectangle_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="468dp"
+                android:layout_marginEnd="60dp"
+                android:foreground="@drawable/rectangle_input"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/rectangle_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="728dp"
                 android:layout_marginEnd="60dp"
                 android:foreground="@drawable/rectangle_input"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -307,6 +320,31 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/edit_school"
+                android:layout_width="306dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="80dp"
+                android:ems="10"
+                android:hint="비밀번호를 입력해주세요."
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rectangle_major" />
+
+            <TextView
+                android:id="@+id/tv_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="270dp"
+                android:text="Password"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="694dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

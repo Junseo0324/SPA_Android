@@ -82,27 +82,6 @@ class OtherFragment : Fragment() {
         }
     }
 
-    private fun accountDelete() {
-        var userId = sharedPreferences.getLong("id", 0)
-        RetrofitApplication.networkService.deleteUser(userId).enqueue(object : Callback<Void>{
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if(response.isSuccessful){
-                    DialogUtils.showApplyDialog(requireContext(),"탈퇴","탈퇴 처리가 완료되었습니다."){
-                        intent = Intent(context,LoginAndRegister::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) //백스택 액티비티 초기화
-                        startActivity(intent)
-                    }
-                }
-            }
-
-
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-
-            }
-
-        })
-
-    }
 
 
     private fun updateUserInformation(){

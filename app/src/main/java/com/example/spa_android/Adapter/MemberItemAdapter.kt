@@ -2,6 +2,7 @@ package com.example.spa_android.Adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spa_android.data.MemberItem
 import com.example.spa_android.databinding.MemberRecyclerBinding
@@ -12,7 +13,7 @@ RecyclerView.Adapter<MemberItemAdapter.MemberItemViewHolder>(){
         val binding = MemberRecyclerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return MemberItemViewHolder(binding)
     }
-
+        //val memberName = findViewById<TextView>(R.id.memberName)
     override fun onBindViewHolder(holder: MemberItemAdapter.MemberItemViewHolder, position: Int) {
         holder.name.text = itemList[position].name
         holder.role.text = itemList[position].role
