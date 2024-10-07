@@ -1,25 +1,28 @@
 package com.example.spa_android.fragment
 
 import android.app.Activity.RESULT_OK
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.spa_android.ApplicantActivity
+import com.example.spa_android.DialogUtils
 import com.example.spa_android.InformationActivity
 import com.example.spa_android.LoginAndRegister
 import com.example.spa_android.R
 import com.example.spa_android.databinding.FragmentOtherBinding
 import com.example.spa_android.retrofit.RetrofitApplication
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class OtherFragment : Fragment() {
     private lateinit var binding: FragmentOtherBinding
@@ -73,27 +76,13 @@ class OtherFragment : Fragment() {
             intent = Intent(context,ApplicantActivity::class.java)
             registerActivity.launch(intent) // 변경해야됌 일단 걸어논거
         }
-        binding.logoutBtn.setOnClickListener {
-//            logout()
-            intent = Intent(context,LoginAndRegister::class.java)
-            registerActivity.launch(intent)
 
-        }
         binding.deleteBtn.setOnClickListener {
-            intent = Intent(context,LoginAndRegister::class.java)
-            registerActivity.launch(intent)
-            accountdelete()
+            accountDelete()
         }
     }
-    private fun accountdelete() {
-        // 탈퇴 확인 다이얼로그
-        AlertDialog.Builder(requireContext())
-            .setTitle("회원 탈퇴")
-            .setMessage("정말로 회원탈퇴 하시겠습니까?")
-            //.setPositiveButton("예") { _, _ -> deleteAccount() }
-            .setNegativeButton("아니오", null)
-            .show()
-    }
+
+
 
     private fun updateUserInformation(){
         val filepath = sharedPreferences.getString("userprofile",null)
@@ -102,6 +91,11 @@ class OtherFragment : Fragment() {
             .load(RetrofitApplication.BASE_URL+ filepath)
             .error(R.drawable.sample_user)
             .into(binding.userImageView)
+        Log.d(TAG, "updateUserInformation: ${RetrofitApplication.BASE_URL+filepath}")
     }
+    
 
+    companion object{
+        const val TAG = "OtherFragment"
+    }
 }
