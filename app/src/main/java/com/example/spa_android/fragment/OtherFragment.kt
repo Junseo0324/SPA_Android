@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -111,7 +112,9 @@ class OtherFragment : Fragment() {
             .load(RetrofitApplication.BASE_URL+ filepath)
             .error(R.drawable.sample_user)
             .into(binding.userImageView)
+        Log.d(TAG, "updateUserInformation: ${RetrofitApplication.BASE_URL+filepath}")
     }
+    
 
     companion object{
         const val TAG = "OtherFragment"
