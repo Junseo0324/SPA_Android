@@ -13,41 +13,31 @@
         android:text="User ID"
         android:textSize="16sp"
         android:textStyle="bold" />
-
-    <!-- 게시글 이미지 -->
-    <ImageView
-        android:id="@+id/imgPost"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background" />
-
     <!-- 게시글 제목 -->
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Title"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp" />
+        android:textStyle="bold" />
 
     <!-- 게시글 내용 -->
     <TextView
         android:id="@+id/tvContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="8dp"
         android:text="Content"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
+        android:textSize="16sp" />
 
     <!-- 첨부 파일 확인 -->
     <Button
         android:id="@+id/btnAttachment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Attached File"
+        android:text="파일 다운로드"
         android:layout_marginTop="16dp" />
 
     <!-- 타임스탬프 -->
@@ -55,7 +45,13 @@
         android:id="@+id/tvTimestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Timestamp"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp" />
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/returnBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="돌아가기" />
 </LinearLayout>

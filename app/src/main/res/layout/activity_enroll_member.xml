@@ -64,6 +64,31 @@
             android:textColor="#000000" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/roleLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/roleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="지원 포지션"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/roleEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Ex) 백엔드, 프론트엔드"
+            android:inputType="text"
+            android:textSize="20sp" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/smBtn"
         android:layout_width="match_parent"

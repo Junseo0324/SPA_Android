@@ -14,10 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.ChatListAdapter
 import com.example.spa_android.databinding.FragmentChatListBinding
-import com.example.spa_android.retrofit.ChatModel
 import com.example.spa_android.retrofit.ChatSummaryDTO
 import com.example.spa_android.retrofit.RetrofitApplication
-import com.example.spa_android.retrofit.UserModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,12 +24,9 @@ class ChatListFragment : Fragment() {
     private lateinit var binding: FragmentChatListBinding
     private lateinit var chatListAdapter : ChatListAdapter
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var userList : ArrayList<UserModel>
     private lateinit var handler: Handler
     private lateinit var runnable: Runnable
-    var chatList = ArrayList<ChatModel>()
     var chatSummaryList = ArrayList<ChatSummaryDTO>()
-    private var countMap = mutableMapOf<String, Int>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -82,6 +77,10 @@ class ChatListFragment : Fragment() {
                 return true
             }
         })
+
+        binding.newChatBtn.setOnClickListener {
+
+        }
     }
 
     //내가 받은 채팅만 가져옴 -> 내가 포함된 채팅을 가져와야 함.
