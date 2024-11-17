@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -41,7 +42,7 @@ class InformationActivity : AppCompatActivity() {
         if (email != null) {
             setUserInformation(email)
         }else{
-            Log.d("InformationActivity","저장된 이메일이 없습니다.")
+            startActivity(Intent(this,LoginAndRegister::class.java))
         }
 
         binding.userInformationIcon.setOnClickListener{
@@ -49,7 +50,7 @@ class InformationActivity : AppCompatActivity() {
         }
 
         binding.updateBtn.setOnClickListener {
-            updateuserInfo()
+            updateUserInfo()
         }
         binding.backBtn.setOnClickListener {
             finish()
@@ -60,26 +61,35 @@ class InformationActivity : AppCompatActivity() {
 
 
     private fun selectImageFromGallery(){
-        Log.d("InformationActivity","selectedImageFromGallery 시작")
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         resultLauncher.launch(intent)
     }
-    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
-        if(result.resultCode == RESULT_OK){
-            selectedImageUri = result.data?.data //선택된 이미지의 URI를 가져옴
-            Log.d("InformationActivity","selectedImageUri: $selectedImageUri")
-            binding.userInformationIcon.setImageURI(selectedImageUri)
-        }
-    }
 
-    private fun updateuserInfo(){
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                val imageUri = result.data?.data
+                selectedImageUri = result.data?.data // 선택된 이미지 URI를 멤버 변수에 저장
+
+                // Glide를 사용해 이미지를 로드
+                if (imageUri != null) {
+                    Glide.with(this)
+                        .load(imageUri)
+                        .into(binding.userInformationIcon)
+                } else {
+                    Toast.makeText(this, "이미지를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+    private fun updateUserInfo(){
         val name = binding.editName.text.toString()
         val email = binding.editEmail3.text.toString()
         val phone = binding.editPhone.text.toString()
         val school = binding.editSchool.text.toString()
         val year = binding.spinner.selectedItem.toString()
         val major = binding.editMajor.text.toString()
-        val password = "1111" // 비밀번호를 입력받는 경우 여기에 추가
+        val password = binding.editPwd.text.toString()
 
         changeUser = UserRequestModel(
             filePath = selectedImageUri?.let { getPathFromUri(it) },
@@ -107,7 +117,7 @@ class InformationActivity : AppCompatActivity() {
 
             // MultipartBody.Part 생성
             val filePart = MultipartBody.Part.createFormData(
-                "filePath", // 서버에서 기대하는 파라미터 이름
+                "filepath", // 서버에서 기대하는 파라미터 이름
                 fileName, // 파일 이름 (이메일.png 또는 이메일.jpeg)
                 file.asRequestBody(mimeType.toMediaTypeOrNull()) // MIME 타입에 맞게 RequestBody 생성
             )
@@ -164,12 +174,12 @@ class InformationActivity : AppCompatActivity() {
                     binding.editPhone.setText(userList[0].phone_num)
                     binding.editSchool.setText(userList[0].school)
                     binding.editMajor.setText(userList[0].major)
+                    binding.editPwd.setText(userList[0].password)
                     SpinnerHandler.setSelectedItem(binding,userList[0].year)
                     Glide.with(binding.userInformationIcon.context)
                         .load(imageUrl+userList[0].filePath)
                         .error(R.drawable.sample_user)
                         .into(binding.userInformationIcon)
-                    Log.d("ImageUrl",imageUrl+userList[0].filePath)
                 }
             }
 

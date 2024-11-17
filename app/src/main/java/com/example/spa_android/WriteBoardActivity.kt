@@ -47,14 +47,22 @@ class WriteBoardActivity : AppCompatActivity() {
             Log.d(TAG,"submitBtn 클릭")
             sendWrite()
         }
+        binding.deletefileBtn.setOnClickListener {
+            clearSelectedFile()
+        }
         binding.fileupBtn.setOnClickListener{
             openFileChooser()
         }
 
     }
 
-
-
+    private fun clearSelectedFile() {
+        // 선택된 파일 초기화
+        selectedFilePath = null
+        selectedFileName = null
+        binding.fileupBtn.text = "파일 선택" // 기본 텍스트로 초기화
+        Toast.makeText(this, "선택된 파일이 초기화되었습니다.", Toast.LENGTH_SHORT).show()
+    }
 
 
     private fun openFileChooser() {
@@ -104,7 +112,7 @@ class WriteBoardActivity : AppCompatActivity() {
     private fun sendWrite(){
         val title = binding.titleEdit.text.toString()
         val content = binding.contentEdit.text.toString()
-        val owner = sharedPreferences.getString("name","관리자")
+        val owner = sharedPreferences.getString("email","관리자")
 
         writeBoardModel = owner?.let { BoardRequestModel(title,content, it) }!!
 

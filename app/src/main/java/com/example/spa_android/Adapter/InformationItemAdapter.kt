@@ -3,10 +3,10 @@ package com.example.spa_android.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spa_android.data.InformationItem
 import com.example.spa_android.databinding.InformationRecyclerBinding
+import com.example.spa_android.retrofit.ProjectContentEntity
 
-class InformationItemAdapter(private val itemList: ArrayList<InformationItem>):
+class InformationItemAdapter(private val itemList: ArrayList<ProjectContentEntity>):
 RecyclerView.Adapter<InformationItemAdapter.InformationItemViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InformationItemAdapter.InformationItemViewHolder {
         val binding = InformationRecyclerBinding.inflate(LayoutInflater.from(parent.context),parent,false)

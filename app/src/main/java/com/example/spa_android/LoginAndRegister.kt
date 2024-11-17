@@ -30,13 +30,16 @@ class LoginAndRegister : AppCompatActivity() {
 
         //sharedPreferences 초기화
         sharedPreferences = getSharedPreferences("MyInformation", Context.MODE_PRIVATE)
+        val isAutoLoginEnabled = sharedPreferences.getBoolean("autoLogin", false) // 자동 로그인 여부 확인
         val userInformation = sharedPreferences.getString("email",null)
+        Log.d(TAG, "onCreate: sharedPreferences 값 : $userInformation")
 
 
-        //자동 로그인 확인
-        if(userInformation!=null){
+        // 자동 로그인 확인
+        if (isAutoLoginEnabled && userInformation != null) {
             loginAuto(userInformation)
         }
+
 
         //로그인 회원가입 전환 -> 시작 시 로그인 먼저 뜨도록 코드 변경
         binding.loginText.setOnClickListener {
@@ -141,6 +144,14 @@ class LoginAndRegister : AppCompatActivity() {
             editor.putString("name",myList[0].name)
             editor.putString("pw",myList[0].password)
             editor.putString("filePath",myList[0].filePath)
+
+            // 자동 로그인 체크 여부 저장
+            if (binding.checkBox.isChecked) {
+                editor.putBoolean("autoLogin", true)
+            } else {
+                editor.putBoolean("autoLogin", false)
+            }
+
             editor.apply()
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
@@ -151,13 +162,11 @@ class LoginAndRegister : AppCompatActivity() {
     }
 
     private fun loginAuto(email: String){
-        if(binding.checkBox.isChecked) {
-            sharedPreferences.edit().putString("email", email).apply()
-            Toast.makeText(this, "자동 로그인", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        sharedPreferences.edit().putString("email", email).apply()
+        Toast.makeText(this, "자동 로그인", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
     companion object{
         const val TAG = "LoginAndRegister"

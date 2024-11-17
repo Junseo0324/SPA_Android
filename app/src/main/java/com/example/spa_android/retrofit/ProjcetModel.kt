@@ -12,3 +12,48 @@ data class ProjcetModel(
     var filePath: String, //파일 경로
     var fileTime: String //파일 업로드 시간
 )
+data class ProjectListModel(
+    var id: String,
+    var projectName: String,
+    var memberCount: String
+)
+
+// TeamProjectDTO
+data class TeamProjectDTO(
+    val id: Int,
+    val projectName: String,
+    val members: ArrayList<MemberDTO>?
+)
+
+// MemberDTO
+data class MemberDTO(
+    val id: Long,
+    val email: String,
+    val memberName: String,
+    var conditions: String,
+    val role: String,
+    val filepath: String
+)
+
+data class ContentDTO(
+    var author: String,
+    var title: String,
+    var content: String,
+)
+
+data class FileDTO(
+    var author: String,
+    var description: String
+)
+data class ProjectContentEntity(
+    var id: String,
+    var author: String,
+    var title: String,
+    var content: String,
+    var createdAt: String,
+    var filePath: String,
+    var description: String,
+    var fileTime: String
+)
+
+

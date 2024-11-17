@@ -2,6 +2,7 @@ package com.example.spa_android.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.BoardItemAdapter
+import com.example.spa_android.OnBoardItemClickListener
 import com.example.spa_android.WriteBoardActivity
 import com.example.spa_android.databinding.FragmentBoardBinding
 import com.example.spa_android.retrofit.BoardModel
@@ -19,12 +21,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class BoardFragment : Fragment() {
+class BoardFragment : Fragment(), OnBoardItemClickListener {
     private lateinit var binding: FragmentBoardBinding
     private lateinit var boardAdapter: BoardItemAdapter
     var boardList = ArrayList<BoardModel>()
     private val boardCall: Call<ArrayList<BoardModel>> = RetrofitApplication.networkService.getBoardList()
-
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onAttach(context: Context) {
         super.onAttach(context)
         getBoardList()
@@ -42,15 +44,15 @@ class BoardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        sharedPreferences = requireActivity().getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
+        val email = sharedPreferences.getString("email",null)
         // 어댑터 생성 및 설정
-        boardAdapter = BoardItemAdapter(boardList)
+        boardAdapter = BoardItemAdapter(boardList,this,email.toString())
         binding.boardRecycler.adapter = boardAdapter
         binding.boardRecycler.layoutManager = LinearLayoutManager(requireContext())
 
 
-        getBoardList()
+//        getBoardList()
 
         // 버튼 클릭 리스너 설정
         binding.writeBtn.setOnClickListener {
@@ -84,6 +86,24 @@ class BoardFragment : Fragment() {
 
     companion object{
         const val TAG = "BoardFragment"
+    }
+
+    override fun deleteBoardItem(id: String, item: BoardModel) {
+        val data = mutableMapOf<String,String>()
+        data.put("owner",item.owner)
+        data.put("title",item.title)
+        RetrofitApplication.networkService.deleteBoard(id,data).clone()?.enqueue(object : Callback<Map<String,String>>{
+            override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
+                if(response.isSuccessful){
+                    Log.d(TAG, "onResponse: ${response.body()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+            }
+
+        })
     }
 }
 

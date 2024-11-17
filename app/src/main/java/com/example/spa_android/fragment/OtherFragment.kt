@@ -39,6 +39,14 @@ class OtherFragment : Fragment() {
             clear() // 모든 데이터를 삭제
             apply() // 변경사항을 저장
         }
+        // Intent에 플래그를 추가하여 백 스택을 모두 제거
+        intent = Intent(context, LoginAndRegister::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+
+        startActivity(intent)
+        requireActivity().finish() // 현재 Fragment가 포함된 Activity 종료
+
     }
 
 
@@ -49,10 +57,7 @@ class OtherFragment : Fragment() {
             val value = result.data?.getStringExtra("resultData")
         }
     }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentOtherBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -64,7 +69,6 @@ class OtherFragment : Fragment() {
         updateUserInformation()
         binding.logoutBtn.setOnClickListener{
             logout()
-            intent = Intent(context,LoginAndRegister::class.java)
 
         }
         binding.myInfoConLayout.setOnClickListener {
@@ -83,6 +87,29 @@ class OtherFragment : Fragment() {
     }
 
 
+    private fun accountDelete(){
+        var email = sharedPreferences.getString("email",null)
+        if(!email.isNullOrEmpty()) {
+            RetrofitApplication.networkService.deleteUser(email).clone()?.enqueue(object :Callback<Void>{
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    Log.d(TAG, "onResponse: ${response.body()}")
+                    DialogUtils.showApplyDialog(context!!,"회원 탈퇴","회원 탈퇴 완료되었습니다."){
+                        val intent = Intent(context,LoginAndRegister::class.java)
+                        with(sharedPreferences.edit()) {
+                            clear() // 모든 데이터를 삭제
+                            apply() // 변경사항을 저장
+                        }
+                        startActivity(intent)
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.d(TAG, "onFailure: ${t.message}")
+                }
+
+            })
+        }
+    }
 
     private fun updateUserInformation(){
         val filepath = sharedPreferences.getString("userprofile",null)
