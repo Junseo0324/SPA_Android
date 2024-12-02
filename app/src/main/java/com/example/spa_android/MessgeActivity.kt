@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.ChatingItemAdapter
 import com.example.spa_android.data.ChatingItem
+import com.example.spa_android.data.FCMDTO
+import com.example.spa_android.data.FCMDataDTO
 import com.example.spa_android.databinding.ActivityMessgeBinding
 import com.example.spa_android.retrofit.ChatModel
 import com.example.spa_android.retrofit.ChatRequestModel
@@ -45,6 +47,7 @@ class MessgeActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("MyInformation", Context.MODE_PRIVATE)
         myEmail = sharedPreferences.getString("email","NonUser").toString()
         chatName = intent.getStringExtra("chatName").toString()
+
         if(myEmail.equals(intent.getStringExtra("sender").toString())){ //보낸 사람이 나면
             chatUser = intent.getStringExtra("receiver").toString() //상대는 받는 사람
         }else{
@@ -102,11 +105,75 @@ class MessgeActivity : AppCompatActivity() {
         // 새로운 메시지를 로컬 리스트에 추가 (즉시 반영)
         val state = 0
         val newMessage = ChatingItem(name = myEmail, message = message, state = state, chatName = chatName)
+        val name = sharedPreferences.getString("name",null).toString()
 
         chatingItemList.add(newMessage) // 로컬 데이터 리스트에 추가
         adapter.notifyItemInserted(chatingItemList.size - 1) // RecyclerView에 새 메시지 추가 알림
         binding.chatingRecycler.scrollToPosition(chatingItemList.size - 1) // 최신 메시지로 스크롤
 
+
+        val fcmDataDTO = FCMDataDTO(
+            message = FCMDataDTO.Message(
+                token = null,
+                data = FCMDataDTO.Data(
+                    id = null,
+                    sender = myEmail,
+                    receiver = chatUser.toString(),
+                    chatName = chatName,
+                    timestamp = System.currentTimeMillis().toString(),
+                    teamId = data.second
+                )
+            )
+        )
+
+        val fcmDTO = FCMDTO(
+            message = FCMDTO.Message(
+                token = null, // 서버가 receiver를 기반으로 토큰 검색
+                notification = FCMDTO.Notification(
+                    title = name,
+                    body = message
+                ),
+                data = FCMDTO.Data(
+                    id = null,
+                    sender = myEmail,
+                    receiver = chatUser.toString(),
+                    chatName = chatName,
+                    timestamp = System.currentTimeMillis().toString(),
+                    teamId = data.second
+                )
+            )
+        )
+
+        RetrofitApplication.networkService.sendNotificationData(fcmDTO).clone()?.enqueue(object : Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if(response.isSuccessful){
+                    Log.d(TAG, "onResponse: sendNotification $fcmDTO")
+                }
+                else {
+                    Log.d(TAG, "onResponse: ${response.errorBody()?.toString()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+            }
+
+
+        })
+
+        RetrofitApplication.networkService.sendData(fcmDataDTO).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Log.d(TAG, "Message sent and notification requested")
+                } else {
+                    Log.e(TAG, "Failed to send message: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.e(TAG, "Error sending message: ${t.message}")
+            }
+        })
 
         chatRequestModel = ChatRequestModel(myEmail,chatUser.toString(),message,chatName,data.second)
         RetrofitApplication.networkService.sendMessage(chatRequestModel).clone()?.enqueue(object : Callback<ChatRequestModel>{
