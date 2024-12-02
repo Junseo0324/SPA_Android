@@ -2,6 +2,7 @@ package com.example.spa_android.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,9 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.spa_android.Adapter.ProjectListAdapter
 import com.example.spa_android.ProjectActivity
+import com.example.spa_android.data.TokenDTO
 import com.example.spa_android.databinding.FragmentHomeBinding
 import com.example.spa_android.retrofit.ProjectListModel
 import com.example.spa_android.retrofit.RetrofitApplication
+import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +25,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var projectAdapter: ProjectListAdapter
     private var projectList : ArrayList<ProjectListModel> = ArrayList()
-
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,9 +56,44 @@ class HomeFragment : Fragment() {
 
         binding.projectRv.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
 
+        getToken(email)
         getProjectList(email)
 
 
+    }
+
+
+    private fun getToken(email: String){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+                task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "Fetching FCM token failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            Log.d(TAG, "Token: $token")
+            sendTokenToServer(email,token)
+        }
+
+    }
+
+    private fun sendTokenToServer(email:String,token:String) {
+        var tokenDTO = TokenDTO(email,token)
+        RetrofitApplication.networkService.saveToken(tokenDTO).clone()?.enqueue(object : Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if(response.isSuccessful){
+                    Log.d(TAG, "onResponse: token 전송 완료 $tokenDTO")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+            }
+
+
+        })
     }
 
     private fun getProjectList(email: String) : ArrayList<ProjectListModel> {

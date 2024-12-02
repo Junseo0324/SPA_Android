@@ -13,8 +13,6 @@ import com.example.spa_android.R
 import com.example.spa_android.databinding.ChatRecyclerBinding
 import com.example.spa_android.retrofit.ChatSummaryDTO
 import com.example.spa_android.retrofit.RetrofitApplication
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class ChatListAdapter(
     private val itemList: ArrayList<ChatSummaryDTO>,
@@ -32,7 +30,8 @@ class ChatListAdapter(
 
         holder.name.text = filteredList[position].senderName
         holder.lastChat.text = filteredList[position].latestMessage
-        holder.chatTime.text = formatTimestamp(filteredList[position].timestamp)
+//        holder.chatTime.text = formatTimestamp(filteredList[position].timestamp)
+        holder.chatTime.text = filteredList[position].timestamp
 
         //unReadCount 가 0일 때는 알림 표시 제외
         val unreadCount = filteredList[position].unreadCount
@@ -97,13 +96,13 @@ class ChatListAdapter(
         val linear = binding.chatLinear
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun formatTimestamp(timestamp: String): String{
-        val dateTime = LocalDateTime.parse(timestamp)
-        val formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm")
-
-        return dateTime.format(formatter)
-    }
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    private fun formatTimestamp(timestamp: String): String{
+//        val dateTime = LocalDateTime.parse(timestamp)
+//        val formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm")
+//
+//        return dateTime.format(formatter)
+//    }
 
     companion object{
         const val TAG = "ChatListAdapter"

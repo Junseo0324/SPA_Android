@@ -1,6 +1,9 @@
 package com.example.spa_android.service
 
 import com.example.spa_android.data.ChatingItem
+import com.example.spa_android.data.FCMDTO
+import com.example.spa_android.data.FCMDataDTO
+import com.example.spa_android.data.TokenDTO
 import com.example.spa_android.retrofit.ApplicantModel
 import com.example.spa_android.retrofit.BoardModel
 import com.example.spa_android.retrofit.ChatRequestModel
@@ -103,6 +106,9 @@ interface NetworkService {
     @GET("/api/content/download/{id}")
     fun downloadFile(@Path("id") id: String): Call<ResponseBody>
 
+    @DELETE("/api/content/deleted/{id}")
+    fun deleteContent(@Path("id") id: String): Call<Void>
+
     //신청자 관리( /api/apply)
     @POST("/api/apply/apply/{id}")
     fun applyToProject(@Path("id") id: String, @Body request: Map<String, String>): Call<Map<String, String>>
@@ -111,11 +117,19 @@ interface NetworkService {
     fun getApplicantsByEmail(@Path("email") email: String): Call<ArrayList<ApplicantModel>>
 
     @POST("/api/apply/approve/{boardId}")
-    fun acceptMember(@Path("boardId") boardId: String,@Query("applicants") applicants: String): Call<Map<String,String>>
+    fun acceptMember(@Path("boardId") boardId: String ,@Query("applicants") applicants: String): Call<Map<String,String>>
 
     @POST("/api/apply/reject/{boardId}")
     fun rejectMember(@Path("boardId") boardId: String, @Query("applicants") applicants: String): Call<Map<String,String>>
 
+    @POST("/token/save")
+    fun saveToken(@Body tokenDTO: TokenDTO): Call<Void>
+
+    @POST("/fcm/sendData")
+    fun sendData(@Body fcmDataDTO: FCMDataDTO): Call<Void>
+
+    @POST("/fcm/send")
+    fun sendNotificationData(@Body fcmDTO: FCMDTO): Call<Void>
 
 
 }
