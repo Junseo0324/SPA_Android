@@ -7,7 +7,9 @@ import com.example.spa_android.OnProjectFileListener
 import com.example.spa_android.databinding.FileRecyclerBinding
 import com.example.spa_android.retrofit.ProjectContentEntity
 
-class FileItemAdapter(private val itemList: ArrayList<ProjectContentEntity>,private val actionListener: OnProjectFileListener):
+class FileItemAdapter(private val itemList: ArrayList<ProjectContentEntity>,
+                      private val actionListener: OnProjectFileListener,
+                      private val email: String):
 RecyclerView.Adapter<FileItemAdapter.FileItemViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileItemAdapter.FileItemViewHolder {
         val binding = FileRecyclerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -21,6 +23,11 @@ RecyclerView.Adapter<FileItemAdapter.FileItemViewHolder>(){
         holder.btn.setOnClickListener {
             actionListener.downloadFile(itemList[position].id)
         }
+        holder.linear.setOnClickListener {
+            if(email == itemList[position].author) {
+                actionListener.deleteFile(itemList[position])
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -31,6 +38,7 @@ RecyclerView.Adapter<FileItemAdapter.FileItemViewHolder>(){
         val content = binding.fileContent
         val time = binding.fileTime
         val btn = binding.fileBtn
+        val linear = binding.fileLinear
     }
 
 }

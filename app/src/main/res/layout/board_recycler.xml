@@ -1,59 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/boarditem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:strokeColor="@color/black"
+    app:strokeWidth="1dp"
     android:layout_margin="10dp"
-    android:background="@drawable/background_board">
+    app:cardCornerRadius="8dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/board_profile"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/sample_user"
-        app:civ_border_overlay="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@android:drawable/btn_dialog" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/boarditem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/board_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="10:48 PM"
-        android:textColor="#7A7A7A"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/board_profile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/sample_user"
+            app:civ_border_overlay="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@android:drawable/btn_dialog" />
 
-    <TextView
-        android:id="@+id/board_Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:text="제목"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/board_profile"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/board_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="10:48 PM"
+            android:textColor="#7A7A7A"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/board_id"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="아이디"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/board_profile" />
+        <TextView
+            android:id="@+id/board_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:text="제목"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/board_profile"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/board_preview"
@@ -74,17 +71,35 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/submitBtn"
-        android:layout_width="73dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="#F8EDDD"
-        android:text="신청하기"
-        android:textColor="#9E896A"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            android:id="@+id/board_preview"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="86dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="내용 미리보기.."
+            android:textColor="#7A7A7A"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/submitBtn"
+            android:layout_width="73dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#F8EDDD"
+            android:text="신청하기"
+            android:textColor="#9E896A"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

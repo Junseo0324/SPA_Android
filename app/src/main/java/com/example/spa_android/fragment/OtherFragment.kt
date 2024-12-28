@@ -28,7 +28,6 @@ class OtherFragment : Fragment() {
     private lateinit var binding: FragmentOtherBinding
     private lateinit var intent: Intent
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var name: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences("MyInformation", Context.MODE_PRIVATE)
@@ -51,7 +50,7 @@ class OtherFragment : Fragment() {
 
 
     private val registerActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult() // ◀ StartActivityForResult 처리를 담당
+        ActivityResultContracts.StartActivityForResult() // StartActivityForResult 처리를 담당
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val value = result.data?.getStringExtra("resultData")
@@ -67,9 +66,9 @@ class OtherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateUserInformation()
-        binding.logoutBtn.setOnClickListener{
-            logout()
 
+        binding.logoutLinear.setOnClickListener {
+            logout()
         }
         binding.myInfoConLayout.setOnClickListener {
             intent = Intent(context,InformationActivity::class.java)
@@ -81,7 +80,7 @@ class OtherFragment : Fragment() {
             registerActivity.launch(intent) // 변경해야됌 일단 걸어논거
         }
 
-        binding.deleteBtn.setOnClickListener {
+        binding.deleteLinear.setOnClickListener {
             accountDelete()
         }
     }

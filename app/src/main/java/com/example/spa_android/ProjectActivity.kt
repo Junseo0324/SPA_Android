@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.FileItemAdapter
 import com.example.spa_android.Adapter.InformationItemAdapter
 import com.example.spa_android.Adapter.MemberItemAdapter
+import com.example.spa_android.data.ChatRequestDTO
 import com.example.spa_android.databinding.ActivityProjectBinding
+import com.example.spa_android.databinding.ConditionDialogBinding
+import com.example.spa_android.databinding.MessageDialogBinding
 import com.example.spa_android.retrofit.MemberDTO
 import com.example.spa_android.retrofit.ProjectContentEntity
 import com.example.spa_android.retrofit.RetrofitApplication
@@ -27,7 +31,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProjectFileListener {
+class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProjectFileListener, OnProjectInfomationListener {
     private lateinit var binding : ActivityProjectBinding
     private lateinit var memberAdapter : MemberItemAdapter
     private lateinit var informationAdapter : InformationItemAdapter
@@ -42,6 +46,7 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
         super.onCreate(savedInstanceState)
 
         sharedPreferences = getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
+        var email = sharedPreferences.getString("email",null)
         binding = ActivityProjectBinding.inflate(layoutInflater)
         setContentView(binding.root)
         projectId = intent.getStringExtra("selectedProject").toString()
@@ -58,13 +63,13 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
         binding.memberRecycler.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
 
         //Information Adapter
-        informationAdapter = InformationItemAdapter(informationList)
+        informationAdapter = InformationItemAdapter(informationList,this,email.toString())
         binding.informationRecycler.layoutManager = LinearLayoutManager(this)
         binding.informationRecycler.adapter = informationAdapter
 
 
         //File Adapter
-        fileAdapter = FileItemAdapter(fileList,this)
+        fileAdapter = FileItemAdapter(fileList,this,email.toString())
         binding.fileRecycler.layoutManager = LinearLayoutManager(this)
         binding.fileRecycler.adapter = fileAdapter
 
@@ -75,23 +80,12 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
             intent.putExtra("isEdit",false) //작성버튼
             startActivity(intent)
         }
-//        binding.infoBtn.setOnLongClickListener {
-//            val intent = Intent(this,InsertInfoActivity::class.java)
-//            intent.putExtra("isEdit", true) //수정버튼
-//            startActivity(intent)
-//            true
-//        }
+
         binding.fileButton.setOnClickListener {
             val intent = Intent(this,ProjectFileActivity::class.java)
             intent.putExtra("projectId",projectId)
             startActivity(intent)
         }
-//        binding.fileButton.setOnLongClickListener {
-//            val intent = Intent(this,ProjectFileActivity::class.java)
-//            intent.putExtra("isEdit", true) //수정버튼
-//            startActivity(intent)
-//            true
-//        }
 
     }
 
@@ -123,8 +117,62 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
         var email = sharedPreferences.getString("email",null)
         if (email.equals(item.email)){
             showConditionDialog(item)
-
         }
+    }
+
+    override fun newChat(item: MemberDTO) {
+        showNewChatMessage(item)
+    }
+
+
+
+    private fun createChat(item: MemberDTO,message: String){
+        val email = sharedPreferences.getString("email",null)
+
+        val chatRequestDTO = ChatRequestDTO(
+            item.email, email.toString(),projectId,message
+        )
+        RetrofitApplication.networkService.createNewChat(chatRequestDTO).clone()?.enqueue(object :Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if(response.isSuccessful){
+                    Log.d(TAG, "onResponse:${response.body()}")
+                    Log.d(TAG, "receiver:${item.email}")
+                    Log.d(TAG, "sender:${email}")
+                    Log.d(TAG, "projectId:${projectId}")
+                    Log.d(TAG, "message:${message}")
+
+                    val intent = Intent(this@ProjectActivity,MessgeActivity::class.java)
+                    intent.putExtra("chatName",projectId)
+                    startActivity(intent)
+
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+            }
+
+        })
+    }
+
+
+    private fun showNewChatMessage(item: MemberDTO) {
+        val dialogBinding = MessageDialogBinding.inflate(layoutInflater)
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogBinding.root)
+
+        builder.setPositiveButton("전송") { dialog, _ ->
+            val message = dialogBinding.dialogInput.text.toString()
+            if (message.isNotBlank()) {
+                createChat(item, message) // 입력된 메시지를 전달
+            } else {
+                Toast.makeText(this, "메시지를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun sendToState(item: MemberDTO){
@@ -157,14 +205,20 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
 
 
     private fun showConditionDialog(item: MemberDTO) {
+        val conditionBinding = ConditionDialogBinding.inflate(layoutInflater)
         val conditions = arrayOf("활동 중", "자리 비움", "오프라인", "휴가")
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("상태 선택")
-        builder.setItems(conditions) { _, which ->
-            item.conditions = conditions[which]
+        builder.setView(conditionBinding.root)
+        val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,conditions)
+        conditionBinding.conditionsList.adapter = adapter
+
+        val dialog = builder.create()
+        conditionBinding.conditionsList.setOnItemClickListener { parent, view, position, id ->
+            item.conditions = conditions[position]
             sendToState(item)
+            dialog.dismiss()
         }
-        builder.show()
+        dialog.show()
     }
 
 
@@ -172,11 +226,17 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
         RetrofitApplication.networkService.getProjectInformation(id).clone()?.enqueue(object: Callback<ArrayList<ProjectContentEntity>>{
             override fun onResponse(call: Call<ArrayList<ProjectContentEntity>>, response: Response<ArrayList<ProjectContentEntity>>) {
                 if(response.isSuccessful){
-                    informationList.clear()
-                    informationList.addAll(response.body()!!)
-                    informationAdapter.notifyDataSetChanged()
-                    Log.d(TAG, "onResponse: $informationList")
-
+                    Log.d(TAG, "onResponse: projectId $id")
+                    Log.d(TAG, "onResponse: responseBody ${response.body()}")
+                    val body = response.body()
+                    if (body != null) {
+                        informationList.clear()
+                        informationList.addAll(body)
+                        informationAdapter.notifyDataSetChanged()
+                        Log.d(TAG, "onResponse: $informationList")
+                    } else {
+                        Log.e(TAG, "Response body is null")
+                    }
                 }
             }
 
@@ -192,10 +252,16 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
         RetrofitApplication.networkService.getFileList(id).clone()?.enqueue(object : Callback<ArrayList<ProjectContentEntity>>{
             override fun onResponse(call: Call<ArrayList<ProjectContentEntity>>, response: Response<ArrayList<ProjectContentEntity>>) {
                 if (response.isSuccessful){
-                    fileList.clear()
-                    fileList.addAll(response.body()!!)
-                    fileAdapter.notifyDataSetChanged()
-                    Log.d(TAG, "onResponse: $fileList")
+                    val body = response.body()
+                    if (body !=null) {
+                        fileList.clear()
+                        fileList.addAll(response.body()!!)
+                        fileAdapter.notifyDataSetChanged()
+                        Log.d(TAG, "onResponse: $fileList")
+                    }else{
+                        Log.e(TAG, "Response body is null")
+
+                    }
                 }
             }
 
@@ -239,6 +305,7 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
 
         })
     }
+
 
     private fun getFileExtensionFromMimeType(mimeType: String?): String {
         return when (mimeType) {
@@ -288,6 +355,43 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
 
     companion object{
         const val TAG="ProjectActivity"
+    }
+
+    override fun deleteItem(item: ProjectContentEntity) {
+        RetrofitApplication.networkService.deleteContent(item.id).clone()?.enqueue(object :Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if(response.isSuccessful){
+                    DialogUtils.showApplyDialog(this@ProjectActivity,"공지사항 삭제","공지사항 삭제가 완료되었습니다."){
+                        getInformationList(projectId)
+                    }
+                    Log.d(TAG, "onResponse: ${response.body()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+            }
+
+        })
+    }
+
+
+    override fun deleteFile(item: ProjectContentEntity) {
+        RetrofitApplication.networkService.deleteContent(item.id).clone()?.enqueue(object : Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if(response.isSuccessful){
+                    DialogUtils.showApplyDialog(this@ProjectActivity,"파일 삭제","파일 삭제가 완료되었습니다."){
+                        getFileList(projectId)
+                    }
+                    Log.d(TAG, "onResponse: ${response.body()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+            }
+
+        })
     }
 
 }

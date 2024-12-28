@@ -29,5 +29,7 @@ data class ChatSummaryDTO(
     var senderName: String,
     var timestamp: String,
     var unreadCount: Int,
-    var filePath : String
+    var filePath : String,
+    var partner : String,
+    var partnerEmail: String
 )

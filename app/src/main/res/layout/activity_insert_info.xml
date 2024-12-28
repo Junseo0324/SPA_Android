@@ -94,5 +94,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/infoContent_edit"
         android:layout_marginTop="20dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
