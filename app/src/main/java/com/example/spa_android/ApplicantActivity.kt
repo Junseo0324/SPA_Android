@@ -33,7 +33,6 @@ class ApplicantActivity : AppCompatActivity() , OnApplicantActionListener{
             finish()
         }
     }
-
     private fun getApplicantsList(email: String) : ArrayList<ApplicantModel>{
         RetrofitApplication.networkService.getApplicantsByEmail(email).clone()?.enqueue(object :Callback<ArrayList<ApplicantModel>>{
             override fun onResponse(call: Call<ArrayList<ApplicantModel>>, response: Response<ArrayList<ApplicantModel>>) {
