@@ -13,7 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
+            android:background="#F8EDDD"
             android:orientation="horizontal">
 
             <TextView
@@ -23,7 +23,7 @@
                 android:layout_weight="1"
                 android:paddingStart="15dp"
                 android:text="SPA"
-                android:textColor="#000000"
+                android:textColor="#9E896A"
                 android:textSize="40sp"
                 android:textStyle="bold" />
 
@@ -44,6 +44,7 @@
                 android:paddingStart="15dp"
                 android:text="나의 프로젝트"
                 android:textAlignment="textStart"
+                android:textColor="#9E896A"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 

@@ -7,7 +7,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
-import android.widget.Toast
+import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -25,7 +26,6 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 
-//import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 
 class WriteBoardActivity : AppCompatActivity() {
     private var selectedFilePath: Uri? = null
@@ -39,9 +39,6 @@ class WriteBoardActivity : AppCompatActivity() {
         binding = ActivityWriteBoradBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setUserInformation()
-        binding.backBtn.setOnClickListener {
-            finish()
-        }
         // 버튼 클릭 이벤트 리스너 설정
         binding.writeSubmit.setOnClickListener {
             Log.d(TAG,"submitBtn 클릭")
@@ -54,6 +51,22 @@ class WriteBoardActivity : AppCompatActivity() {
             openFileChooser()
         }
 
+        setSupportActionBar(binding.toolbarWriteBoard)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.back)
+
+
+        updateDeleteBtnVisibility()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun clearSelectedFile() {
@@ -61,9 +74,16 @@ class WriteBoardActivity : AppCompatActivity() {
         selectedFilePath = null
         selectedFileName = null
         binding.fileupBtn.text = "파일 선택" // 기본 텍스트로 초기화
-        Toast.makeText(this, "선택된 파일이 초기화되었습니다.", Toast.LENGTH_SHORT).show()
+        updateDeleteBtnVisibility()
     }
 
+    private fun updateDeleteBtnVisibility() {
+        if (selectedFilePath != null) {
+            binding.deletefileBtn.visibility = View.VISIBLE // 파일이 첨부되면 보이기
+        } else {
+            binding.deletefileBtn.visibility = View.GONE // 파일이 없으면 숨기기
+        }
+    }
 
     private fun openFileChooser() {
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
@@ -80,8 +100,6 @@ class WriteBoardActivity : AppCompatActivity() {
             result.data?.data?.let { uri ->
                 handleFileUpload(uri)
             }
-        } else {
-            Toast.makeText(this, "파일 선택이 취소되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -94,6 +112,7 @@ class WriteBoardActivity : AppCompatActivity() {
                 binding.fileupBtn.text = selectedFileName
             }
         }
+        updateDeleteBtnVisibility()
     }
 
     private fun setUserInformation(){

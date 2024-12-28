@@ -2,34 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/chatingLinear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/background_board"
-        android:orientation="vertical"
-        android:padding="8dp"
-        android:gravity="start"
-        android:minWidth="180dp">
-
-        <TextView
-            android:id="@+id/userIdTv"
+        <LinearLayout
+            android:id="@+id/chatingLinear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="user1"
-            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/messageTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:padding="8dp"
-            android:text="안녕"
-            android:textSize="20sp" />
-    </LinearLayout>
+            android:gravity="start"
+            android:minWidth="180dp"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/chatingCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeWidth="1dp"
+                app:strokeColor="#000000"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:id="@+id/innerChatLinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:minWidth="180dp"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/userIdTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="user1"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/messageTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:padding="8dp"
+                    android:text="안녕"
+                    android:textSize="20sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
 </LinearLayout>

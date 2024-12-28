@@ -13,8 +13,6 @@ import com.example.spa_android.R
 import com.example.spa_android.databinding.ChatRecyclerBinding
 import com.example.spa_android.retrofit.ChatSummaryDTO
 import com.example.spa_android.retrofit.RetrofitApplication
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class ChatListAdapter(
     private val itemList: ArrayList<ChatSummaryDTO>,
@@ -30,9 +28,10 @@ class ChatListAdapter(
     override fun onBindViewHolder(holder: ChatListAdapter.ChatListViewHolder, position: Int) {
 
 
-        holder.name.text = filteredList[position].senderName
+        holder.name.text = filteredList[position].partner
+        holder.chatName.text = filteredList[position].chatName
         holder.lastChat.text = filteredList[position].latestMessage
-        holder.chatTime.text = formatTimestamp(filteredList[position].timestamp)
+        holder.chatTime.text = filteredList[position].timestamp
 
         //unReadCount 가 0일 때는 알림 표시 제외
         val unreadCount = filteredList[position].unreadCount
@@ -50,10 +49,13 @@ class ChatListAdapter(
             .placeholder(R.drawable.sample_user) // 로딩 중에 보여줄 이미지
             .into(holder.image)
 
+
         holder.linear.setOnClickListener {
             val intent = Intent(holder.itemView.context,MessgeActivity::class.java)
             intent.putExtra("chatName",filteredList[position].chatName)
             intent.putExtra("sender",filteredList[position].sender)
+            intent.putExtra("partner",filteredList[position].partner) //상대방
+            intent.putExtra("partnerEmail",filteredList[position].partnerEmail) //상대방 이메일
             onItemClick(filteredList[position].sender,filteredList[position].receiver)
             intent.putExtra("receiver",filteredList[position].receiver)
             holder.itemView.context.startActivity(intent)
@@ -90,19 +92,12 @@ class ChatListAdapter(
     inner class ChatListViewHolder(private val binding: ChatRecyclerBinding):RecyclerView.ViewHolder(binding.root){
         val image = binding.chatListImage
         val name = binding.chatuser
+        val chatName = binding.chatName
         val lastChat = binding.lastChat
         val chatTime = binding.lastChatTime
         val notificationNum = binding.chatNotiNum
         val icon = binding.NotificationIcon
         val linear = binding.chatLinear
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun formatTimestamp(timestamp: String): String{
-        val dateTime = LocalDateTime.parse(timestamp)
-        val formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm")
-
-        return dateTime.format(formatter)
     }
 
     companion object{

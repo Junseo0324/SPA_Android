@@ -9,3 +9,10 @@ data class ChatingItem(
     val state : Int, //나 인지 아닌지 // 0 or 1
     val chatName: String
 )
+
+data class ChatRequestDTO(
+    val receiver: String,
+    val sender: String,
+    val projectId: String,
+    val message: String
+)

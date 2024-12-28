@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.BoardItemAdapter
+import com.example.spa_android.DialogUtils
 import com.example.spa_android.OnBoardItemClickListener
 import com.example.spa_android.WriteBoardActivity
 import com.example.spa_android.databinding.FragmentBoardBinding
@@ -95,6 +96,9 @@ class BoardFragment : Fragment(), OnBoardItemClickListener {
         RetrofitApplication.networkService.deleteBoard(id,data).clone()?.enqueue(object : Callback<Map<String,String>>{
             override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
                 if(response.isSuccessful){
+                    DialogUtils.showApplyDialog(context!!,"게시글 삭제","게시글 삭제가 완료되었습니다."){
+                        getBoardList()
+                    }
                     Log.d(TAG, "onResponse: ${response.body()}")
                 }
             }

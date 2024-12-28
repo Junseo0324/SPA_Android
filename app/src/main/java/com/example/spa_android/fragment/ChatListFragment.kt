@@ -38,10 +38,6 @@ class ChatListFragment : Fragment() {
         handler.removeCallbacks(runnable) // 핸들러 정리
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentChatListBinding.inflate(inflater,container,false)
@@ -77,10 +73,6 @@ class ChatListFragment : Fragment() {
                 return true
             }
         })
-
-        binding.newChatBtn.setOnClickListener {
-
-        }
     }
 
     //내가 받은 채팅만 가져옴 -> 내가 포함된 채팅을 가져와야 함.

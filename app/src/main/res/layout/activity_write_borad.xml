@@ -8,29 +8,16 @@
     android:orientation="vertical"
     tools:context=".WriteBoardActivity">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarWriteBoard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F8EDDD">
+        android:background="#F8EDDD"
+        app:titleTextColor="#9E896A"
 
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:src="@drawable/back" />
-
-        <TextView
-            android:id="@+id/writeTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="글쓰기"
-            android:textAlignment="center"
-            android:textColor="#9E896A"
-            android:textSize="25sp" />
-
-    </RelativeLayout>
+        app:title="글쓰기"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,50 +88,70 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/contentTv"
+                android:id="@+id/fileTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="내용"
-
+                android:text="파일 첨부"
+                android:layout_marginBottom="10dp"
                 android:textColor="#000000"
                 android:textSize="20sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/fileupBtn"
-                    android:layout_width="181dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="파일 첨부" />
 
                 <ImageButton
                     android:id="@+id/deletefileBtn"
-                    android:layout_width="30dp"
-                    android:layout_height="31dp"
-                    app:srcCompat="@android:drawable/btn_dialog" />
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_delete_file_btn" />
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/contentEdit"
+            <TextView
+                android:id="@+id/contentTv"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_board"
-                android:ems="10"
-                android:hint="    내용 입력"
-                android:inputType="textMultiLine"
+                android:layout_height="wrap_content"
+                android:text="내용"
+                android:layout_marginBottom="10dp"
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
-                android:lines="20"
-                android:scrollbars="vertical"
-                android:textColor="#000000" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="8dp">
+
+                <EditText
+                    android:id="@+id/contentEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="내용 입력"
+                    android:inputType="textMultiLine"
+                    android:padding="20dp"
+                    android:background="@android:color/transparent"
+                    android:lines="10"
+                    android:scrollbars="vertical"
+                    android:textColor="#000000" />
+
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
         <Button
