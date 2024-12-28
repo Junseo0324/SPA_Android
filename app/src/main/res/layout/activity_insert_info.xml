@@ -89,7 +89,6 @@
         android:layout_height="wrap_content"
         android:text="작성하기"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#3F51B5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/infoContent_edit"

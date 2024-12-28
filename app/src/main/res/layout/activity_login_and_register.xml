@@ -168,7 +168,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/rectangle_email"
             android:layout_width="311dp"
-            android:layout_height="50dp"
+
+            android:layout_height="70dp"
             android:layout_marginTop="20dp"
             android:hint="이메일 주소를 입력해주세요."
             app:boxBackgroundMode="outline"
@@ -198,7 +199,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/rectangle_pw"
             android:layout_width="311dp"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_marginTop="50dp"
             android:hint="비밀번호를 입력해주세요."
             app:boxBackgroundMode="outline"
