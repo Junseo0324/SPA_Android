@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.FileItemAdapter
 import com.example.spa_android.Adapter.InformationItemAdapter
 import com.example.spa_android.Adapter.MemberItemAdapter
+import com.example.spa_android.data.ChatRequestDTO
 import com.example.spa_android.databinding.ActivityProjectBinding
+import com.example.spa_android.databinding.ConditionDialogBinding
+import com.example.spa_android.databinding.MessageDialogBinding
 import com.example.spa_android.retrofit.MemberDTO
 import com.example.spa_android.retrofit.ProjectContentEntity
 import com.example.spa_android.retrofit.RetrofitApplication
@@ -113,8 +117,62 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
         var email = sharedPreferences.getString("email",null)
         if (email.equals(item.email)){
             showConditionDialog(item)
-
         }
+    }
+
+    override fun newChat(item: MemberDTO) {
+        showNewChatMessage(item)
+    }
+
+
+
+    private fun createChat(item: MemberDTO,message: String){
+        val email = sharedPreferences.getString("email",null)
+
+        val chatRequestDTO = ChatRequestDTO(
+            item.email, email.toString(),projectId,message
+        )
+        RetrofitApplication.networkService.createNewChat(chatRequestDTO).clone()?.enqueue(object :Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if(response.isSuccessful){
+                    Log.d(TAG, "onResponse:${response.body()}")
+                    Log.d(TAG, "receiver:${item.email}")
+                    Log.d(TAG, "sender:${email}")
+                    Log.d(TAG, "projectId:${projectId}")
+                    Log.d(TAG, "message:${message}")
+
+                    val intent = Intent(this@ProjectActivity,MessgeActivity::class.java)
+                    intent.putExtra("chatName",projectId)
+                    startActivity(intent)
+
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+            }
+
+        })
+    }
+
+
+    private fun showNewChatMessage(item: MemberDTO) {
+        val dialogBinding = MessageDialogBinding.inflate(layoutInflater)
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogBinding.root)
+
+        builder.setPositiveButton("전송") { dialog, _ ->
+            val message = dialogBinding.dialogInput.text.toString()
+            if (message.isNotBlank()) {
+                createChat(item, message) // 입력된 메시지를 전달
+            } else {
+                Toast.makeText(this, "메시지를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun sendToState(item: MemberDTO){
@@ -147,14 +205,20 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
 
 
     private fun showConditionDialog(item: MemberDTO) {
+        val conditionBinding = ConditionDialogBinding.inflate(layoutInflater)
         val conditions = arrayOf("활동 중", "자리 비움", "오프라인", "휴가")
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("상태 선택")
-        builder.setItems(conditions) { _, which ->
-            item.conditions = conditions[which]
+        builder.setView(conditionBinding.root)
+        val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,conditions)
+        conditionBinding.conditionsList.adapter = adapter
+
+        val dialog = builder.create()
+        conditionBinding.conditionsList.setOnItemClickListener { parent, view, position, id ->
+            item.conditions = conditions[position]
             sendToState(item)
+            dialog.dismiss()
         }
-        builder.show()
+        dialog.show()
     }
 
 

@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spa_android.databinding.ActivityBoardBinding
@@ -39,13 +40,23 @@ class BoardActivity : AppCompatActivity() {
         fileName  = boardItem?.filePath
         getBoardItem(boardId.toString())
 
-        binding.returnBtn.setOnClickListener {
-            finish()
-        }
-        // 첨부 파일 버튼 클릭 시 동작
-        binding.btnAttachment.setOnClickListener {
+        setSupportActionBar(binding.boardToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.back)
+
+        //파일 다운로드
+        binding.mBtnAttachment.setOnClickListener {
             downloadFile(boardId.toString())
-            // 첨부 파일 열기 로직 추가 가능
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -89,8 +100,6 @@ class BoardActivity : AppCompatActivity() {
                         val success = saveFileToDisk(responseBody, fileName)
                         if (success) {
                             Toast.makeText(this@BoardActivity, "파일 다운로드 완료", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(this@BoardActivity, "파일 저장 실패", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } else {

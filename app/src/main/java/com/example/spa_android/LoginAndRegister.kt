@@ -157,7 +157,7 @@ class LoginAndRegister : AppCompatActivity() {
             startActivity(intent)
             finish()
         }else{
-            Toast.makeText(this,"로그인 실패! 이메일과 비번 확인",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"이메일과 비밀번호를 확인하세요.",Toast.LENGTH_SHORT).show()
         }
     }
 

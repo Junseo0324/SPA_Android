@@ -2,6 +2,7 @@ package com.example.spa_android.Adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spa_android.OnMemberStateChangeListener
 import com.example.spa_android.databinding.MemberRecyclerBinding
@@ -21,6 +22,19 @@ RecyclerView.Adapter<MemberItemAdapter.MemberItemViewHolder>(){
         // 다이얼로그 클릭 시 상태변경 후 서버에 상태 변경값 전송하기.
         holder.linear.setOnClickListener {
             actionListener.changeState(itemList[position])
+        }
+
+
+        holder.linear.setOnLongClickListener {
+            AlertDialog.Builder(it.context)
+                .setTitle("새로운 채팅 메시지")
+                .setMessage("이 사용자와 채팅을 시작하시겠습니까?")
+                .setPositiveButton("예") { _, _ ->
+                    actionListener.newChat(itemList[position])
+                }
+                .setNegativeButton("아니오", null)
+                .show()
+            true
         }
     }
 

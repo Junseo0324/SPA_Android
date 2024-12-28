@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spa_android.databinding.ActivityEnrollMemberBinding
 import com.example.spa_android.retrofit.BoardModel
@@ -25,10 +26,22 @@ class EnrollMemberActivity : AppCompatActivity() {
         binding.smBtn.setOnClickListener {
             applicationProject()
         }
-        binding.backtoBoardBtn.setOnClickListener{
-            finish()
-        }
+        setSupportActionBar(binding.toolbarWriteBoard)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.back)
 
+
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun applicationProject(){
@@ -60,15 +73,6 @@ class EnrollMemberActivity : AppCompatActivity() {
         data["applied_motive"] = binding.submitEdit.text.toString()
         data["role"]=binding.roleEdit.text.toString()
         return data
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) {
-            val submitText = binding.submitEdit
-            submitText.requestFocus()
-            submitText.showSoftInputOnFocus = true
-        }
     }
 
     companion object{
