@@ -6,41 +6,45 @@
     android:padding="16dp">
 
     <!-- 아이디 표시 -->
-    <TextView
-        android:id="@+id/tvUserId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="User ID"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-    <!-- 게시글 제목 -->
-    <TextView
-        android:id="@+id/tvTitle"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Title"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_height="473dp"
+        android:background="@drawable/border"
+        android:orientation="vertical">
 
-    <!-- 게시글 내용 -->
-    <TextView
-        android:id="@+id/tvContent"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="8dp"
-        android:text="Content"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvUserId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User ID"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <!-- 첨부 파일 확인 -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Title"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="8dp"
+            android:text="Content"
+            android:textSize="16sp" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnAttachment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="파일 다운로드"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:text="파일 다운로드" />
 
-    <!-- 타임스탬프 -->
     <TextView
         android:id="@+id/tvTimestamp"
         android:layout_width="wrap_content"
@@ -54,4 +58,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="돌아가기" />
+
+    <!-- 게시글 제목 -->
+
+    <!-- 게시글 내용 -->
+
+    <!-- 첨부 파일 확인 -->
+
+    <!-- 타임스탬프 -->
+
 </LinearLayout>
