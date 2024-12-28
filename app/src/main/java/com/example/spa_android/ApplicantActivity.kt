@@ -28,7 +28,10 @@ class ApplicantActivity : AppCompatActivity() , OnApplicantActionListener{
         adapter = ApplicantAdapter(applicantList,this)
         binding.applicantRv.adapter = adapter
         binding.applicantRv.layoutManager = LinearLayoutManager(this)
-
+        // 뒤로 가기 버튼 클릭 시 Activity 종료
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
 
     }
 
