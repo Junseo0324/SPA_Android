@@ -1,5 +1,6 @@
 package com.example.spa_android.service
 
+import com.example.spa_android.data.ChatRequestDTO
 import com.example.spa_android.data.ChatingItem
 import com.example.spa_android.data.FCMDTO
 import com.example.spa_android.data.FCMDataDTO
@@ -76,6 +77,8 @@ interface NetworkService {
     @PUT("api/chat/read/{sender}/{receiver}")
     fun markMessageAsRead(@Path("sender") sender: String, @Path("receiver") receiver: String): Call<Void>
 
+    @POST("/api/chat/new")
+    fun createNewChat(@Body chatRequestDTO: ChatRequestDTO): Call<Void>
 
     //프로젝트 (/api/team)
     @GET("/api/team/list/email/{email}")

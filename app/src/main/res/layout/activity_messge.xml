@@ -8,10 +8,20 @@
     android:orientation="vertical"
     tools:context=".MessgeActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/messageToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F8EDDD"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="채팅"
+        app:titleTextColor="#9E896A" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatingRecycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_weight="1"

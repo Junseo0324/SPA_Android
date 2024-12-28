@@ -48,6 +48,11 @@ class MessgeActivity : AppCompatActivity() {
         myEmail = sharedPreferences.getString("email","NonUser").toString()
         chatName = intent.getStringExtra("chatName").toString()
 
+        var partner = intent.getStringExtra("partner").toString()
+        var partnerEmail = intent.getStringExtra("partnerEmail").toString()
+
+        Log.d(TAG, "onCreate: partner : $partner")
+        Log.d(TAG, "onCreate: partnerEmail : $partnerEmail")
         if(myEmail.equals(intent.getStringExtra("sender").toString())){ //보낸 사람이 나면
             chatUser = intent.getStringExtra("receiver").toString() //상대는 받는 사람
         }else{
@@ -77,9 +82,7 @@ class MessgeActivity : AppCompatActivity() {
                     if (chattingItems != null) {
                         // 기존 데이터를 유지하고 새로운 데이터 추가
                         chatingItemList.clear()
-//                        val currentSize = chatingItemList.size
                         chatingItemList.addAll(chattingItems) // 새로운 데이터 추가
-//                        adapter.notifyItemRangeInserted(currentSize, chattingItems.size) // 새로 추가된 항목만 알림
                         adapter.notifyDataSetChanged() // RecyclerView에 데이터 변경 알림
                         binding.chatingRecycler.scrollToPosition(chatingItemList.size - 1) // 최신 메시지로 스크롤
                     } else {
