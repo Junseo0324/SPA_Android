@@ -32,7 +32,6 @@ class ApplicantActivity : AppCompatActivity() , OnApplicantActionListener{
         binding.backBtn.setOnClickListener {
             finish()
         }
-
     }
 
     private fun getApplicantsList(email: String) : ArrayList<ApplicantModel>{
