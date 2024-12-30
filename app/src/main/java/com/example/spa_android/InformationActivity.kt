@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +38,13 @@ class InformationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityInfomationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 툴바 설정
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 뒤로가기 버튼 표시
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+
         sharedPreferences = getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
         val email = sharedPreferences.getString("email",null)
         if (email != null) {
@@ -126,6 +134,16 @@ class InformationActivity : AppCompatActivity() {
             updateUser(email, changeUser, filePart)
         } else {
             Log.d("InformationActivity", "이미지가 선택되지 않았습니다.")
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish() // 뒤로가기 버튼 클릭 시 액티비티 종료
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

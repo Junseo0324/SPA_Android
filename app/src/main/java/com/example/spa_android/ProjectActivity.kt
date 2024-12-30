@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -49,13 +50,20 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
         var email = sharedPreferences.getString("email",null)
         binding = ActivityProjectBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 툴바 설정
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 뒤로가기 버튼 표시
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+
         projectId = intent.getStringExtra("selectedProject").toString()
         Log.d(TAG, "onCreate: selectProject ${intent.getStringExtra("selectedProject")}")
         getListByProjectId(intent.getStringExtra("selectedProject").toString())
         getInformationList(projectId)
         //프로젝트 이름 설정
         binding.ProjectName.text = intent.getStringExtra("selectedProjectName")
-
+        binding.toolbar.title = intent.getStringExtra("selectedProjectName")
 
         //Member Adapter
         memberAdapter = MemberItemAdapter(memberDTO,this)
@@ -87,6 +95,16 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
             startActivity(intent)
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish() // 뒤로가기 버튼 클릭 시 액티비티 종료
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun getListByProjectId(id: String){

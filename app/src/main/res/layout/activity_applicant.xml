@@ -8,6 +8,14 @@
     android:background="@color/white"
     tools:context=".ApplicantActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:title="신청자 현황"
+        app:titleTextColor="@android:color/black"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
