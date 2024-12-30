@@ -15,7 +15,9 @@ data class ProjcetModel(
 data class ProjectListModel(
     var id: String,
     var projectName: String,
-    var memberCount: String
+    var memberCount: String,
+    val projectId: String,         // 프로젝트 ID
+    val projectDescription: String // 프로젝트 설명
 )
 
 // TeamProjectDTO
