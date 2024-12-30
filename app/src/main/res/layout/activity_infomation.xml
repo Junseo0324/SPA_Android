@@ -8,27 +8,14 @@
     android:background="@color/white"
     tools:context=".InformationActivity">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F8EDDD">
-
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:src="@drawable/back" />
-
-        <TextView
-            android:id="@+id/writeTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=" 내 정보 수정"
-            android:textAlignment="center"
-            android:textSize="25sp"
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
+        android:layout_height="?attr/actionBarSize"
+        android:layout_weight="1"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="정보 수정" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -210,10 +197,10 @@
 
     <Button
         android:id="@+id/updateBtn"
-        android:layout_width="156dp"
-        android:layout_height="51dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_weight="1"
         android:backgroundTint="#9E896A"
         android:text="수정하기"
         android:textColor="#FFFFFF"
