@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spa_android.data.ChatingItem
+import com.example.spa_android.data.MessageDTO
 import com.example.spa_android.databinding.ChatingRecyclerBinding
 
 
-class ChatingItemAdapter(private val context: Context,private val itemList: ArrayList<ChatingItem>):
+class ChatingItemAdapter(private val context: Context,private val itemList: ArrayList<MessageDTO>,private val myEmail: String):
 RecyclerView.Adapter<ChatingItemAdapter.ChatingItemViewHolder>(){
-    private val sharedPreferences = context.getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatingItemAdapter.ChatingItemViewHolder {
         val binding = ChatingRecyclerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ChatingItemViewHolder(binding)
@@ -23,17 +21,18 @@ RecyclerView.Adapter<ChatingItemAdapter.ChatingItemViewHolder>(){
 
         val params = holder.chatLinear.layoutParams as LinearLayout.LayoutParams
 
-        if(itemList[position].state == 0){
+        if(itemList[position].sender == myEmail){
             params.gravity = android.view.Gravity.END
             holder.name.text = "나"
             holder.chatLinear.gravity = android.view.Gravity.END
 
-        }else{
-            holder.name.text = itemList[position].name
+        }else {
+            holder.name.text = itemList[position].senderName
             params.gravity = android.view.Gravity.START
             holder.chatLinear.gravity = android.view.Gravity.START
         }
-        holder.chatLinear.layoutParams = params // 변경된 layoutParams 적용
+        // 변경된 layoutParams 적용
+        holder.chatLinear.layoutParams = params
 
     }
 
@@ -46,11 +45,6 @@ RecyclerView.Adapter<ChatingItemAdapter.ChatingItemViewHolder>(){
         val messsage = binding.messageTv
         val chatLinear = binding.chatingLinear
 
-    }
-    fun updateChattingItems(newItems: List<ChatingItem>) {
-        itemList.clear()
-        itemList.addAll(newItems)
-        notifyDataSetChanged() // 데이터 변경 알림
     }
 
 }

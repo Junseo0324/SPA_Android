@@ -1,14 +1,14 @@
 package com.example.spa_android.service
 
 import com.example.spa_android.data.ChatRequestDTO
-import com.example.spa_android.data.ChatingItem
+import com.example.spa_android.data.ChatRoomDTO
 import com.example.spa_android.data.FCMDTO
 import com.example.spa_android.data.FCMDataDTO
+import com.example.spa_android.data.MessageDTO
+import com.example.spa_android.data.RoomListDTO
 import com.example.spa_android.data.TokenDTO
 import com.example.spa_android.retrofit.ApplicantModel
 import com.example.spa_android.retrofit.BoardModel
-import com.example.spa_android.retrofit.ChatRequestModel
-import com.example.spa_android.retrofit.ChatSummaryDTO
 import com.example.spa_android.retrofit.ContentDTO
 import com.example.spa_android.retrofit.FileDTO
 import com.example.spa_android.retrofit.ProjectContentEntity
@@ -66,19 +66,30 @@ interface NetworkService {
 
 
 
-    //채팅관련 (/api/chat)
-    @GET("/api/chat/chattingItems")
-    fun getChattingItems(@Query("chatName") chatName: String, @Query("sharedEmail") sharedEmail: String): Call<List<ChatingItem>>
-    @POST("/api/chat/send")
-    fun sendMessage(@Body chatDTO: ChatRequestModel): Call<ChatRequestModel>
-    @GET("api/chat/summary/{userEmail}")
-    fun getChatListByUser(@Path("userEmail") userEmail: String): Call<ArrayList<ChatSummaryDTO>>
-
-    @PUT("api/chat/read/{sender}/{receiver}")
-    fun markMessageAsRead(@Path("sender") sender: String, @Path("receiver") receiver: String): Call<Void>
-
     @POST("/api/chat/new")
     fun createNewChat(@Body chatRequestDTO: ChatRequestDTO): Call<Void>
+
+
+    //채팅 관련
+    @GET("/api/room/list/{email}")
+    fun getRoomByEmail(@Path("email") email: String): Call<ArrayList<RoomListDTO>>
+
+    @GET("/api/chatRoom/list/{roomId}")
+    fun getRoomMessage(@Path("roomId") roomId: String): Call<List<MessageDTO>>
+
+    @PUT("api/chatRoom/read/{roomId}/{receiver}")
+    fun markMessageAsRead(@Path("roomId") roomId: String,@Path("receiver") receiver: String): Call<Void>
+
+    @POST("/api/chatRoom/send")
+    fun sendMessageToUser(@Body chatRoomDTO: ChatRoomDTO): Call<Void>
+
+    @GET("/api/room/listData/{email}/{receiver}/{projectId}")
+    fun getChatListData(@Path("email") email: String, @Path("receiver") receiver: String, @Path("projectId") projectId: String): Call<RoomListDTO>
+
+
+
+
+
 
     //프로젝트 (/api/team)
     @GET("/api/team/list/email/{email}")
