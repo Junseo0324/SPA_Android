@@ -9,12 +9,11 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.ChatingItemAdapter
-import com.example.spa_android.data.ChatingItem
+import com.example.spa_android.data.ChatRoomDTO
 import com.example.spa_android.data.FCMDTO
 import com.example.spa_android.data.FCMDataDTO
+import com.example.spa_android.data.MessageDTO
 import com.example.spa_android.databinding.ActivityMessgeBinding
-import com.example.spa_android.retrofit.ChatModel
-import com.example.spa_android.retrofit.ChatRequestModel
 import com.example.spa_android.retrofit.RetrofitApplication
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,18 +23,22 @@ class MessgeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMessgeBinding
     private lateinit var adapter: ChatingItemAdapter
     private lateinit var sharedPreferences : SharedPreferences
-    private var chatingItemList = ArrayList<ChatingItem>()
-    private var chatModelItem = ArrayList<ChatModel>()
-    private lateinit var chatRequestModel: ChatRequestModel
+    private var chattingItemList = ArrayList<MessageDTO>()
     private var myEmail = "None"
     private var chatName = "test"
-    private var chatUser: String? = null
+    private var roomId = "0"
+    private var chatUser = "UnknownUser"
     private lateinit var handler: Handler
     private lateinit var runnable: Runnable
 
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(runnable) //핸들러 정리
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        roomId = intent.getStringExtra("roomId").toString()
     }
 
 
@@ -47,24 +50,21 @@ class MessgeActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("MyInformation", Context.MODE_PRIVATE)
         myEmail = sharedPreferences.getString("email","NonUser").toString()
         chatName = intent.getStringExtra("chatName").toString()
-
+        roomId = intent.getStringExtra("roomId").toString()
         var partner = intent.getStringExtra("partner").toString()
-        var partnerEmail = intent.getStringExtra("partnerEmail").toString()
+        binding.messageToolbar.title = partner
+        binding.messageToolbar.subtitle = chatName
+        Log.d(TAG, "onCreate: roomId : $roomId and chatName : $chatName")
 
-        Log.d(TAG, "onCreate: partner : $partner")
-        Log.d(TAG, "onCreate: partnerEmail : $partnerEmail")
-        if(myEmail.equals(intent.getStringExtra("sender").toString())){ //보낸 사람이 나면
-            chatUser = intent.getStringExtra("receiver").toString() //상대는 받는 사람
-        }else{
-            chatUser = intent.getStringExtra("sender").toString() // 아니면 상대가 보낸 사람
-        }
-        Log.d(TAG, "onCreate: chatName $chatName")
+        chatUser = intent.getStringExtra("partnerEmail").toString() //상대는 받는 사람
 
-        adapter = ChatingItemAdapter(this,chatingItemList)
+        Log.d(TAG, "onCreate: chatName $chatName and chatUser $chatUser")
+
+        adapter = ChatingItemAdapter(this,chattingItemList,myEmail)
         binding.chatingRecycler.adapter = adapter
         binding.chatingRecycler.layoutManager = LinearLayoutManager(this)
 
-        fetchChattingItems(chatName,myEmail)
+        fetchChattingItems(roomId)
 
         adapter.notifyDataSetChanged()
 
@@ -74,17 +74,17 @@ class MessgeActivity : AppCompatActivity() {
         }
 
     }
-    private fun fetchChattingItems(chatName: String, sharedEmail: String) {
-        RetrofitApplication.networkService.getChattingItems(chatName, sharedEmail).enqueue(object : Callback<List<ChatingItem>> {
-            override fun onResponse(call: Call<List<ChatingItem>>, response: Response<List<ChatingItem>>) {
+    private fun fetchChattingItems(roomId: String) {
+        RetrofitApplication.networkService.getRoomMessage(roomId).enqueue(object : Callback<List<MessageDTO>> {
+            override fun onResponse(call: Call<List<MessageDTO>>, response: Response<List<MessageDTO>>) {
                 if (response.isSuccessful) {
                     val chattingItems = response.body()
                     if (chattingItems != null) {
                         // 기존 데이터를 유지하고 새로운 데이터 추가
-                        chatingItemList.clear()
-                        chatingItemList.addAll(chattingItems) // 새로운 데이터 추가
+                        chattingItemList.clear()
+                        chattingItemList.addAll(chattingItems) // 새로운 데이터 추가
                         adapter.notifyDataSetChanged() // RecyclerView에 데이터 변경 알림
-                        binding.chatingRecycler.scrollToPosition(chatingItemList.size - 1) // 최신 메시지로 스크롤
+                        binding.chatingRecycler.scrollToPosition(chattingItemList.size - 1) // 최신 메시지로 스크롤
                     } else {
                         Log.d(TAG, "Response body is null")
                     }
@@ -93,26 +93,28 @@ class MessgeActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<List<ChatingItem>>, t: Throwable) {
+            override fun onFailure(call: Call<List<MessageDTO>>, t: Throwable) {
                 Log.d(TAG, "Failed to fetch chatting items: $t")
             }
         })
     }
 
     private fun sendMessage(){
-        val data = getRequestData()
         var message = binding.insertMessageEdit.text.toString()
         if(message.isEmpty()){
             return
         }
-        // 새로운 메시지를 로컬 리스트에 추가 (즉시 반영)
-        val state = 0
-        val newMessage = ChatingItem(name = myEmail, message = message, state = state, chatName = chatName)
-        val name = sharedPreferences.getString("name",null).toString()
 
-        chatingItemList.add(newMessage) // 로컬 데이터 리스트에 추가
-        adapter.notifyItemInserted(chatingItemList.size - 1) // RecyclerView에 새 메시지 추가 알림
-        binding.chatingRecycler.scrollToPosition(chatingItemList.size - 1) // 최신 메시지로 스크롤
+        var projectId = intent.getStringExtra("projectNumber")
+        Log.d(TAG, "onCreate: projectId: $projectId")
+
+        val newMessage = MessageDTO(sender = myEmail, receiver = chatUser, senderName = intent.getStringExtra("myName").toString(), receiverName = intent.getStringExtra("partner").toString(), message = message, isRead = false)
+        val name = sharedPreferences.getString("name",null).toString()
+        Log.d(TAG, "sendMessage: name $name")
+
+        chattingItemList.add(newMessage) // 로컬 데이터 리스트에 추가
+        adapter.notifyItemInserted(chattingItemList.size - 1) // RecyclerView에 새 메시지 추가 알림
+        binding.chatingRecycler.scrollToPosition(chattingItemList.size - 1) // 최신 메시지로 스크롤
 
 
         val fcmDataDTO = FCMDataDTO(
@@ -121,10 +123,10 @@ class MessgeActivity : AppCompatActivity() {
                 data = FCMDataDTO.Data(
                     id = null,
                     sender = myEmail,
-                    receiver = chatUser.toString(),
+                    receiver = chatUser,
                     chatName = chatName,
                     timestamp = System.currentTimeMillis().toString(),
-                    teamId = data.second
+                    teamId = projectId.toString()
                 )
             )
         )
@@ -139,10 +141,10 @@ class MessgeActivity : AppCompatActivity() {
                 data = FCMDTO.Data(
                     id = null,
                     sender = myEmail,
-                    receiver = chatUser.toString(),
+                    receiver = chatUser,
                     chatName = chatName,
                     timestamp = System.currentTimeMillis().toString(),
-                    teamId = data.second
+                    teamId = projectId.toString()
                 )
             )
         )
@@ -178,15 +180,16 @@ class MessgeActivity : AppCompatActivity() {
             }
         })
 
-        chatRequestModel = ChatRequestModel(myEmail,chatUser.toString(),message,chatName,data.second)
-        RetrofitApplication.networkService.sendMessage(chatRequestModel).clone()?.enqueue(object : Callback<ChatRequestModel>{
-            override fun onResponse(call: Call<ChatRequestModel>, response: Response<ChatRequestModel>) {
-                Log.d(TAG, "onResponse: ${response.body()}")
-                //chatModelItem에 업데이트하는 메서드 필요?
+        var sendMessage = ChatRoomDTO(sender = myEmail, receiver = chatUser,message = message, projectId = projectId.toString())
+
+        RetrofitApplication.networkService.sendMessageToUser(sendMessage).clone()?.enqueue(object : Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 updateRecyclerView()
+                Log.d(TAG, "onResponse: ${response.body()}")
             }
-            override fun onFailure(call: Call<ChatRequestModel>, t: Throwable) {
-                Log.d(TAG, "onFailure: $t")
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
             }
 
         })
@@ -194,17 +197,6 @@ class MessgeActivity : AppCompatActivity() {
         binding.insertMessageEdit.text.clear()
     }
 
-    private fun getRequestData(): Pair<String,String>{
-        var receiver = myEmail
-        var teamId = "SPA"
-        for(chatModel in chatModelItem){
-            if( chatModel.sender == myEmail){
-                receiver = chatModel.receiver
-                teamId  = chatModel.teamId
-            }
-        }
-        return Pair(receiver,teamId)
-    }
 
     private fun updateRecyclerView(){
         //데이터 업데이트
@@ -215,7 +207,7 @@ class MessgeActivity : AppCompatActivity() {
         handler = Handler(Looper.getMainLooper()) //메인 스레드에서 실행
         runnable = object : Runnable {
             override fun run() {
-                fetchChattingItems(chatName, myEmail) // 새로운 메시지 가져오기
+                fetchChattingItems(roomId) // 새로운 메시지 가져오기
                 handler.postDelayed(this, 5000) // 5초마다 반복
             }
         }

@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.spa_android.MessgeActivity
 import com.example.spa_android.R
+import com.example.spa_android.data.RoomListDTO
 import com.example.spa_android.data.TokenDTO
 import com.example.spa_android.retrofit.RetrofitApplication
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -19,6 +20,7 @@ import retrofit2.Response
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
+    private var roomListDTO: RoomListDTO? = null
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
@@ -72,6 +74,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         } else {
             Log.e("FCM", "Email not found in SharedPreferences. Token not sent.")
         }
+    }
+
+    private fun getChatListFromEmail(email: String,receiver:String,projectId: String) {
+        RetrofitApplication.networkService.getChatListData(email,receiver,projectId).clone()?.enqueue(object :Callback<RoomListDTO>{
+            override fun onResponse(call: Call<RoomListDTO>, response: Response<RoomListDTO>) {
+                if(response.isSuccessful){
+                    roomListDTO = response.body()
+                    Log.d("FirebaseMessagingService", "onResponse: $roomListDTO")
+                }
+            }
+
+            override fun onFailure(call: Call<RoomListDTO>, t: Throwable) {
+                Log.d("FirebaseMessagingService", "onFailure: ${t.message}")
+            }
+
+        })
     }
 
     private fun showNotification(title: String, body: String) {

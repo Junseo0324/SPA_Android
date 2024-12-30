@@ -33,6 +33,11 @@ class BoardFragment : Fragment(), OnBoardItemClickListener {
         getBoardList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getBoardList()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -52,8 +57,9 @@ class BoardFragment : Fragment(), OnBoardItemClickListener {
         binding.boardRecycler.adapter = boardAdapter
         binding.boardRecycler.layoutManager = LinearLayoutManager(requireContext())
 
-
-//        getBoardList()
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            getBoardList()
+        }
 
         // 버튼 클릭 리스너 설정
         binding.writeBtn.setOnClickListener {
@@ -73,6 +79,9 @@ class BoardFragment : Fragment(), OnBoardItemClickListener {
                         boardList.addAll(it) // 새로운 데이터 추가
                         boardList.reverse() //최신 순서부터 출력
                         boardAdapter.notifyDataSetChanged() // 어댑터에 데이터 변경 알림
+
+                        binding.swipeRefreshLayout.isRefreshing = false
+
                     }
                 }
             }
@@ -81,6 +90,7 @@ class BoardFragment : Fragment(), OnBoardItemClickListener {
                 Log.d(TAG,"실패 ${t.message}")
             }
         })
+
 
     }
 

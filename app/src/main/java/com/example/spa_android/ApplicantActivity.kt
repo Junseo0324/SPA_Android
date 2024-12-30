@@ -22,7 +22,7 @@ class ApplicantActivity : AppCompatActivity() , OnApplicantActionListener{
         super.onCreate(savedInstanceState)
         binding = ActivityApplicantBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var sharedPreferences =getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
+        var sharedPreferences = getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
         email = sharedPreferences.getString("email",null).toString()
         var applicantList = getApplicantsList(email.toString())
         adapter = ApplicantAdapter(applicantList,this)
