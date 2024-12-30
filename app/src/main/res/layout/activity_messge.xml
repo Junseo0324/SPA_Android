@@ -16,7 +16,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="채팅"
-        app:titleTextColor="#9E896A" />
+        app:subtitle="프로젝트 이름" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatingRecycler"

@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.FileItemAdapter
 import com.example.spa_android.Adapter.InformationItemAdapter
 import com.example.spa_android.Adapter.MemberItemAdapter
-import com.example.spa_android.data.ChatRequestDTO
+import com.example.spa_android.data.ChatRoomDTO
+import com.example.spa_android.data.RoomListDTO
 import com.example.spa_android.databinding.ActivityProjectBinding
 import com.example.spa_android.databinding.ConditionDialogBinding
 import com.example.spa_android.databinding.MessageDialogBinding
@@ -42,6 +43,7 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
     private lateinit var projectId : String
     private lateinit var sharedPreferences : SharedPreferences
     private var memberDTO : ArrayList<MemberDTO> = ArrayList()
+    private var roomListDTO: RoomListDTO? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,6 +57,7 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
         getInformationList(projectId)
         //프로젝트 이름 설정
         binding.ProjectName.text = intent.getStringExtra("selectedProjectName")
+//        binding.toolbar.title = intent.getStringExtra("selectedProjectName")
 
 
         //Member Adapter
@@ -129,22 +132,17 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
     private fun createChat(item: MemberDTO,message: String){
         val email = sharedPreferences.getString("email",null)
 
-        val chatRequestDTO = ChatRequestDTO(
-            item.email, email.toString(),projectId,message
+
+        val chatRoomDTO = ChatRoomDTO(
+            email.toString(),item.email,message,projectId
         )
-        RetrofitApplication.networkService.createNewChat(chatRequestDTO).clone()?.enqueue(object :Callback<Void>{
+
+
+
+        RetrofitApplication.networkService.sendMessageToUser(chatRoomDTO).clone()?.enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if(response.isSuccessful){
-                    Log.d(TAG, "onResponse:${response.body()}")
-                    Log.d(TAG, "receiver:${item.email}")
-                    Log.d(TAG, "sender:${email}")
-                    Log.d(TAG, "projectId:${projectId}")
-                    Log.d(TAG, "message:${message}")
-
-                    val intent = Intent(this@ProjectActivity,MessgeActivity::class.java)
-                    intent.putExtra("chatName",projectId)
-                    startActivity(intent)
-
+                    getChatListFromEmail(email.toString(),item.email,projectId)
                 }
             }
 
@@ -153,6 +151,40 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
             }
 
         })
+    }
+
+    private fun getChatListFromEmail(email: String,receiver:String,projectId: String) {
+        RetrofitApplication.networkService.getChatListData(email,receiver,projectId).clone()?.enqueue(object :Callback<RoomListDTO>{
+            override fun onResponse(call: Call<RoomListDTO>, response: Response<RoomListDTO>) {
+                if(response.isSuccessful){
+                    roomListDTO = response.body()
+                    roomListDTO?.let {
+                        startMessageActivity(it)
+                    } ?: run {
+                        intent = Intent(this@ProjectActivity,MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<RoomListDTO>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+            }
+
+        })
+    }
+
+    private fun startMessageActivity(roomListDTO: RoomListDTO) {
+        val intent = Intent(this@ProjectActivity, MessgeActivity::class.java)
+        intent.putExtra("chatName", roomListDTO.chatName)
+        intent.putExtra("roomId", roomListDTO.roomId)
+        intent.putExtra("myEmail", roomListDTO.myEmail)
+        intent.putExtra("projectNumber", roomListDTO.projectId)
+        intent.putExtra("partner", roomListDTO.partnerName) //상대방
+        intent.putExtra("partnerEmail", roomListDTO.partner) //상대방 이메일
+        startActivity(intent)
     }
 
 
