@@ -13,8 +13,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.ChatListAdapter
+import com.example.spa_android.data.RoomListDTO
 import com.example.spa_android.databinding.FragmentChatListBinding
-import com.example.spa_android.retrofit.ChatSummaryDTO
 import com.example.spa_android.retrofit.RetrofitApplication
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,7 +26,7 @@ class ChatListFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var handler: Handler
     private lateinit var runnable: Runnable
-    var chatSummaryList = ArrayList<ChatSummaryDTO>()
+    var roomList = ArrayList<RoomListDTO>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -35,7 +35,8 @@ class ChatListFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacks(runnable) // 핸들러 정리
+        // 핸들러 정리
+        handler.removeCallbacks(runnable) 
     }
 
 
@@ -47,8 +48,8 @@ class ChatListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        chatListAdapter = ChatListAdapter(chatSummaryList){
-            senderEmail, receiverEmail -> markMessageAsRead(senderEmail,receiverEmail)
+        chatListAdapter = ChatListAdapter(roomList){
+            roomID, email -> markMessageAsRead(roomID,email)
         }
         binding.chatRv.adapter = chatListAdapter
         binding.chatRv.layoutManager = LinearLayoutManager(context)
@@ -75,31 +76,29 @@ class ChatListFragment : Fragment() {
         })
     }
 
-    //내가 받은 채팅만 가져옴 -> 내가 포함된 채팅을 가져와야 함.
+    //내가 포함된 채팅목록
     private fun getChatListFromEmail(email: String){
-        RetrofitApplication.networkService.getChatListByUser(email).clone()?.enqueue(object : Callback<ArrayList<ChatSummaryDTO>>{
-            override fun onResponse(call: Call<ArrayList<ChatSummaryDTO>>, response: Response<ArrayList<ChatSummaryDTO>>) {
-                if (response.isSuccessful) {
-                    chatSummaryList.clear() // 기존 리스트 초기화
-                    chatSummaryList.addAll(response.body() ?: emptyList())
-                    Log.d(TAG, "getChatList: chatList: $chatSummaryList")
-                    chatListAdapter.notifyDataSetChanged() // 데이터가 변경되었음을 알림
-                }
-
+        RetrofitApplication.networkService.getRoomByEmail(email).clone()?.enqueue(object : Callback<ArrayList<RoomListDTO>>{
+            override fun onResponse(call: Call<ArrayList<RoomListDTO>>, response: Response<ArrayList<RoomListDTO>>) {
+                roomList.clear()
+                roomList.addAll(response.body() ?: emptyList())
+                Log.d(TAG, "onResponse: roomList --  $roomList")
+                chatListAdapter.notifyDataSetChanged()
             }
-            override fun onFailure(call: Call<ArrayList<ChatSummaryDTO>>, t: Throwable) {
-                Log.d(TAG, "onFailure: 네트워크 통신 실패 $t")
+
+            override fun onFailure(call: Call<ArrayList<RoomListDTO>>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
             }
 
         })
     }
 
-    private fun markMessageAsRead(sender: String, receiver: String) {
-        RetrofitApplication.networkService.markMessageAsRead(sender, receiver).enqueue(object : Callback<Void> {
+    private fun markMessageAsRead(roomId: String, email: String) {
+        RetrofitApplication.networkService.markMessageAsRead(roomId, email).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
-                    Log.d(TAG, "Messages marked as read successfully for sender: $sender and receiver: $receiver")
-                    // UI 업데이트 필요 시 처리
+                    Log.d(TAG, "Messages marked as read roomId: $roomId and email: $email")
+
                 } else {
                     Log.d(TAG, "Failed to mark messages as read: ${response.errorBody()}")
                 }
