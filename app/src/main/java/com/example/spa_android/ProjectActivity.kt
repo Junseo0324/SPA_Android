@@ -64,7 +64,6 @@ class ProjectActivity : AppCompatActivity(), OnMemberStateChangeListener, OnProj
         getListByProjectId(intent.getStringExtra("selectedProject").toString())
         getInformationList(projectId)
         //프로젝트 이름 설정
-        binding.ProjectName.text = intent.getStringExtra("selectedProjectName")
         binding.toolbar.title = intent.getStringExtra("selectedProjectName")
 
         //Member Adapter

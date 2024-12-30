@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
     app:cardCornerRadius="10dp"
-    app:cardElevation="4dp"
-    app:strokeColor="#E0E0E0"
+    app:cardBackgroundColor="@color/white"
+    app:strokeColor="@color/black"
     app:strokeWidth="1dp">
 
 <androidx.constraintlayout.widget.ConstraintLayout

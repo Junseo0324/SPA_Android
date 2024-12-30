@@ -9,7 +9,6 @@ import com.example.spa_android.fragment.BoardFragment
 import com.example.spa_android.fragment.ChatListFragment
 import com.example.spa_android.fragment.HomeFragment
 import com.example.spa_android.fragment.OtherFragment
-import androidx.appcompat.widget.Toolbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -18,34 +17,31 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 툴바를 찾아서 액션 바로 설정
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 
-        // 뒤로 가기 버튼 활성화
-        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 뒤로 가기 버튼 활성화
-        supportActionBar?.setDisplayShowHomeEnabled(true) // 홈 아이콘 표시
-
-        // 타이틀 설정 (옵션)
-        supportActionBar?.title = "My App Title"
+        binding.toolbar.title = "SPA"
         // 초기 Fragment 설정
         replaceFragment(HomeFragment())
         binding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.m_board -> {
                     replaceFragment(BoardFragment())
+                    binding.toolbar.title = "게시판"
                     true
                 }
                 R.id.m_home -> {
                     replaceFragment(HomeFragment())
+                    binding.toolbar.title = "SPA"
                     true
                 }
                 R.id.m_chat -> {
                     replaceFragment(ChatListFragment())
+                    binding.toolbar.title = "채팅"
                     true
                 }
                 R.id.m_menu -> {
                     replaceFragment(OtherFragment())
+                    binding.toolbar.title = "설정"
                     true
                 }
                 else -> false

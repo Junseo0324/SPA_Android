@@ -14,9 +14,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:title="App Title"
-        android:elevation="4dp" />
+        android:background="#F8EDDD"
+        app:titleTextColor="#9E896A"
+        android:title="App Title" />
 
         <FrameLayout
             android:id="@+id/fg"

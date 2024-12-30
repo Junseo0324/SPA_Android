@@ -60,9 +60,10 @@ class InformationActivity : AppCompatActivity() {
         binding.updateBtn.setOnClickListener {
             updateUserInfo()
         }
-        binding.backBtn.setOnClickListener {
-            finish()
-        }
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.back)
+
         SpinnerHandler.setUpSpinnerItem(this,binding)
         SpinnerHandler.setUpSpinnerListener(binding)
     }

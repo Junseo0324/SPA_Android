@@ -12,18 +12,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:title="프로젝트 이름" />
-
-    <TextView
-        android:id="@+id/ProjectName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="#F8EDDD"
-        android:text="Project Name"
-        android:textColor="#9E896A"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        app:titleTextColor="#9E896A"
+        app:title="프로젝트 이름" />
 
     <ScrollView
         android:layout_width="match_parent"
