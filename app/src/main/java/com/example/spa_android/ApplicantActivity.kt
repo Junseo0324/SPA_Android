@@ -3,6 +3,7 @@ package com.example.spa_android
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.ApplicantAdapter
@@ -22,7 +23,14 @@ class ApplicantActivity : AppCompatActivity() , OnApplicantActionListener{
         super.onCreate(savedInstanceState)
         binding = ActivityApplicantBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var sharedPreferences = getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
+
+        // 툴바 설정
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 뒤로가기 버튼 표시
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+
+        var sharedPreferences =getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
         email = sharedPreferences.getString("email",null).toString()
         var applicantList = getApplicantsList(email.toString())
         adapter = ApplicantAdapter(applicantList,this)
@@ -33,7 +41,16 @@ class ApplicantActivity : AppCompatActivity() , OnApplicantActionListener{
         binding.backBtn.setOnClickListener {
             finish()
         }
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish() // 뒤로가기 버튼 클릭 시 액티비티 종료
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun getApplicantsList(email: String) : ArrayList<ApplicantModel>{
