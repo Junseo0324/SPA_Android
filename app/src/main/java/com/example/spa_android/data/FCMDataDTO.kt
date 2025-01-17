@@ -14,6 +14,9 @@ data class FCMDataDTO(
         val receiver: String,
         val chatName: String,
         val timestamp: String,
-        val teamId: String
+        val teamId: String,
+        val partnerName: String,
+        val roomId: String
+
     )
 }

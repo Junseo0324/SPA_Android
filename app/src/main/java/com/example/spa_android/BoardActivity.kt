@@ -60,6 +60,7 @@ class BoardActivity : AppCompatActivity() {
         }
     }
 
+
     private fun setBoardItem(boardItem: BoardModel){
         binding.tvUserId.text = name.toString() ?: "Unknown"
         binding.tvTitle.text = boardItem.title//제목

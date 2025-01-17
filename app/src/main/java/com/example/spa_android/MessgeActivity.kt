@@ -1,11 +1,13 @@
 package com.example.spa_android
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spa_android.Adapter.ChatingItemAdapter
@@ -25,7 +27,7 @@ class MessgeActivity : AppCompatActivity() {
     private lateinit var sharedPreferences : SharedPreferences
     private var chattingItemList = ArrayList<MessageDTO>()
     private var myEmail = "None"
-    private var chatName = "test"
+    private var chatName = "None"
     private var roomId = "0"
     private var chatUser = "UnknownUser"
     private lateinit var handler: Handler
@@ -66,6 +68,10 @@ class MessgeActivity : AppCompatActivity() {
 
         fetchChattingItems(roomId)
 
+        setSupportActionBar(binding.messageToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.back)
+
         adapter.notifyDataSetChanged()
 
         startPollingForMessages()
@@ -73,6 +79,17 @@ class MessgeActivity : AppCompatActivity() {
             sendMessage()
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                startActivity(Intent(this,MainActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
     private fun fetchChattingItems(roomId: String) {
         RetrofitApplication.networkService.getRoomMessage(roomId).enqueue(object : Callback<List<MessageDTO>> {
@@ -126,7 +143,9 @@ class MessgeActivity : AppCompatActivity() {
                     receiver = chatUser,
                     chatName = chatName,
                     timestamp = System.currentTimeMillis().toString(),
-                    teamId = projectId.toString()
+                    teamId = projectId.toString(),
+                    roomId = roomId,
+                    partnerName = intent.getStringExtra("myName").toString()
                 )
             )
         )
@@ -144,11 +163,13 @@ class MessgeActivity : AppCompatActivity() {
                     receiver = chatUser,
                     chatName = chatName,
                     timestamp = System.currentTimeMillis().toString(),
-                    teamId = projectId.toString()
+                    teamId = projectId.toString(),
+                    roomId = roomId,
+                    partnerName = intent.getStringExtra("myName").toString()
                 )
             )
         )
-
+        Log.d(TAG, "sendMessage: fcmDTO : $fcmDTO and fcmDataDTO: $fcmDataDTO")
         RetrofitApplication.networkService.sendNotificationData(fcmDTO).clone()?.enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if(response.isSuccessful){
@@ -208,7 +229,7 @@ class MessgeActivity : AppCompatActivity() {
         runnable = object : Runnable {
             override fun run() {
                 fetchChattingItems(roomId) // 새로운 메시지 가져오기
-                handler.postDelayed(this, 5000) // 5초마다 반복
+                handler.postDelayed(this, 1000) // 1초마다 반복
             }
         }
         handler.post(runnable)

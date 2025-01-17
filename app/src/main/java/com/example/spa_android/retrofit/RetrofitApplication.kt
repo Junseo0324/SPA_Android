@@ -11,7 +11,7 @@ import java.lang.reflect.Type
 
 class RetrofitApplication : Application() {
     companion object{
-        val BASE_URL = "http://172.30.1.45:8888"
+        val BASE_URL = "http://172.30.43.224:8888"
 
         private val nullOnEmptyConverterFactory = object : Converter.Factory() {
             fun converterFactory() = this

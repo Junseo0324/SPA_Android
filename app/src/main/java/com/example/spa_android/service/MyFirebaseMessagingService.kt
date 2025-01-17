@@ -5,11 +5,11 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.spa_android.MessgeActivity
 import com.example.spa_android.R
-import com.example.spa_android.data.RoomListDTO
 import com.example.spa_android.data.TokenDTO
 import com.example.spa_android.retrofit.RetrofitApplication
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -20,7 +20,11 @@ import retrofit2.Response
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private var roomListDTO: RoomListDTO? = null
+    private lateinit var sharedPreferences: SharedPreferences
+    override fun onCreate() {
+        super.onCreate()
+        sharedPreferences = getSharedPreferences("MyInformation",Context.MODE_PRIVATE)
+    }
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
@@ -31,24 +35,52 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
         Log.d("onMessage", message.data.toString())
+        Log.d("onMessageReceived", "Message data: ${message.data}")
+        Log.d("onMessageReceived", "Message notification: ${message.notification}")
 
+        var title = "알림"
+        var body = "내용 없음"
         // 알림 메시지 처리
         val notification = message.notification
         if (notification != null) {
-            val title = notification.title ?: "알림"
-            val body = notification.body ?: "내용 없음"
-            showNotification(title, body)
-        }
-
-        // 데이터 메시지 처리
-        if (message.data.isNotEmpty()) {
+            title = notification.title ?: "알림"
+            body = notification.body ?: "내용 없음"
             val data = message.data
             val sender = data["sender"]
             val chatName = data["chatName"]
-            val customMessage = "채팅방 $chatName 에서 $sender 가 메시지를 보냈습니다."
-
-            showNotification("새 메시지 알림", customMessage)
+            val projectID = data["teamId"]
+            val roomId = data["roomId"]
+            val partner = data["partnerName"]
+            Log.d("firebase", "onMessageReceived: $data")
+//            showNotification(title, body)
+            showDataNotification(title,
+                body,
+                sender.toString(),
+                sharedPreferences.getString("email",null).toString(),
+                projectID.toString(),
+                roomId.toString(),
+                partner.toString(),
+                chatName.toString())
         }
+
+//        // 데이터 메시지 처리
+//        if (message.data.isNotEmpty()) {
+//            val data = message.data
+//            val sender = data["sender"]
+//            val chatName = data["chatName"]
+//            val projectID = data["teamId"]
+//            val roomId = data["roomId"]
+//            val partner = data["partnerName"]
+//            Log.d("firebase", "onMessageReceived: $data")
+//            showDataNotification(title,
+//                body,
+//                sender.toString(),
+//                sharedPreferences.getString("email",null).toString(),
+//                projectID.toString(),
+//                roomId.toString(),
+//                partner.toString(),
+//                chatName.toString())
+//        }
 
     }
 
@@ -76,27 +108,58 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun getChatListFromEmail(email: String,receiver:String,projectId: String) {
-        RetrofitApplication.networkService.getChatListData(email,receiver,projectId).clone()?.enqueue(object :Callback<RoomListDTO>{
-            override fun onResponse(call: Call<RoomListDTO>, response: Response<RoomListDTO>) {
-                if(response.isSuccessful){
-                    roomListDTO = response.body()
-                    Log.d("FirebaseMessagingService", "onResponse: $roomListDTO")
-                }
+    private fun showDataNotification(title: String, body: String,sender: String, receiver: String, projectId: String,roomId:String,partner:String,chatName:String) {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val intent = Intent(this, MessgeActivity::class.java)
+            intent.putExtra("chatName", chatName)
+            intent.putExtra("roomId", roomId)
+            intent.putExtra("myEmail", receiver)
+            intent.putExtra("projectNumber", projectId)
+            intent.putExtra("partner", partner)
+            intent.putExtra("partnerEmail",sender)
+
+            val pendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                val channelId = "default_channel"
+                val channel = NotificationChannel(
+                    channelId,
+                    "Default Channel",
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+                notificationManager.createNotificationChannel(channel)
+
+                val notification = NotificationCompat.Builder(this, channelId)
+                    .setContentTitle(title)
+                    .setContentText(body)
+                    .setSmallIcon(R.drawable.ic_notification)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .build()
+
+                notificationManager.notify(0, notification)
+            } else {
+                val notification = NotificationCompat.Builder(this)
+                    .setContentTitle(title)
+                    .setContentText(body)
+                    .setSmallIcon(R.drawable.ic_notification)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .build()
+
+                notificationManager.notify(0, notification)
             }
 
-            override fun onFailure(call: Call<RoomListDTO>, t: Throwable) {
-                Log.d("FirebaseMessagingService", "onFailure: ${t.message}")
-            }
-
-        })
     }
-
     private fun showNotification(title: String, body: String) {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val intent = Intent(this, MessgeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
         val pendingIntent = PendingIntent.getActivity(
             this,
             0,
