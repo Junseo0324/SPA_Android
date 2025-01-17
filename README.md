@@ -18,5 +18,6 @@
 - **Backend**: Java, Spring boot, MariaDB
 
 ## 서비스 UI
+<img src = "images/appinfo_1.png" width ="30%" /> <img src = "images/appinfo_2.png" width= "30%"/>
 
 
